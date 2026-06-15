@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Konten Kesehatan - HEALTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="konten.css">
+    <style>
+    .content-detail-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+    .content-detail-inner{background:white;border-radius:20px;width:100%;max-width:680px;margin:auto;overflow:hidden;animation:slideUp 0.3s ease}
+    @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .content-detail-img{width:100%;height:220px;object-fit:cover}
+    .content-detail-body{padding:24px}
+    .content-detail-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .content-detail-badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;background:#f0faf8;color:#007260}
+    .content-detail-title{font-size:22px;font-weight:800;color:#1a1a1a;margin-bottom:12px;line-height:1.3}
+    .content-detail-text{font-size:14px;color:#555;line-height:1.8;margin-bottom:16px}
+    .content-detail-tips{background:#f0faf8;border-radius:12px;padding:16px;border-left:4px solid #007260;margin-bottom:16px}
+    .content-detail-tips h4{font-size:13px;font-weight:700;color:#007260;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .content-detail-tips li{font-size:13px;color:#444;line-height:1.7;margin-left:16px}
+    .content-detail-close{position:absolute;top:16px;right:16px;background:white;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+    .content-detail-actions{display:flex;gap:10px}
+    .btn-save-content{background:#007260;color:white;border:none;padding:11px 22px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+    .btn-close-content{background:#f5f5f5;color:#666;border:none;padding:11px 22px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+    </style>
+</head>
+<body>
+<nav class="navbar" style="background:white;box-shadow:0 2px 10px rgba(0,0,0,0.08);position:sticky;top:0;z-index:1000;">
+    <div class="navbar-container">
+        <div class="logo"><img src="../assets/image/Logo.png" alt="Logo" class="logo-img"><h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1></div>
+        <div class="nav-links-top">
+            <a href="../index.html">Beranda</a>
+            <a href="../dashboard/dashboard.html">Dashboard</a>
+            <a href="konten.html" class="active">Konten</a>
+            <a href="../plan/plan.html">Rencana</a>
+            <a href="../checklist/checklist.html">Checklist</a>
+            <a href="../profile/profile.html">Profil</a>
+        </div>
+        <div class="nav-icons">
+            <button id="langBtn"><i class="fas fa-globe"></i> ID</button>
+            <button id="notifBtn"><i class="fas fa-bell"></i></button>
+            <img src="../assets/image/avatar.jpg" alt="profil" onclick="toggleUserMenu()">
+        </div>
+    </div>
+</nav>
+
+<main class="konten-page">
+    <div class="konten-container">
+        <div class="konten-header">
+            <h1 id="konten-title"><i class="fas fa-book-open"></i> Konten Kesehatan</h1>
+            <p id="konten-subtitle">Temukan artikel, panduan, dan tips kesehatan terkurasi untuk Anda</p>
+            <div class="konten-search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Cari konten..." oninput="filterContent()">
+            </div>
+        </div>
+
+        <div class="category-tabs">
+            <button class="cat-tab active" data-cat="all" onclick="setCategory('all')"><i class="fas fa-th"></i> <span id="lbl-all">Semua</span></button>
+            <button class="cat-tab" data-cat="fitness" onclick="setCategory('fitness')"><i class="fas fa-running"></i> <span id="lbl-fitness">Kebugaran</span></button>
+            <button class="cat-tab" data-cat="nutrition" onclick="setCategory('nutrition')"><i class="fas fa-apple-alt"></i> <span id="lbl-nutrition">Nutrisi</span></button>
+            <button class="cat-tab" data-cat="mental" onclick="setCategory('mental')"><i class="fas fa-brain"></i> <span id="lbl-mental">Mental</span></button>
+            <button class="cat-tab" data-cat="sleep" onclick="setCategory('sleep')"><i class="fas fa-bed"></i> <span id="lbl-sleep">Tidur</span></button>
+            <button class="cat-tab" data-cat="women" onclick="setCategory('women')"><i class="fas fa-venus"></i> <span id="lbl-women">Wanita</span></button>
+        </div>
+
+        <div class="featured-banner" id="featuredBanner"></div>
+        <div class="konten-grid" id="kontenGrid"></div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col"><div class="footer-logo"><img src="../assets/image/Logo.png" class="footer-logo-img"><h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1></div><p class="footer-tagline">Empowering healthier lives through digital innovation.</p></div>
+        <div class="footer-col"><h4 class="footer-title">Tautan Cepat</h4><ul class="footer-links"><li><a href="../index.html">Beranda</a></li><li><a href="../dashboard/dashboard.html">Dashboard</a></li><li><a href="konten.html">Konten</a></li><li><a href="../plan/plan.html">Rencana</a></li><li><a href="../checklist/checklist.html">Checklist</a></li><li><a href="../profile/profile.html">Profil</a></li></ul></div>
+        <div class="footer-col"><h4 class="footer-title">Hubungi Kami</h4><ul class="footer-contact"><li><i class="fas fa-envelope"></i> healtech@gmail.com</li><li><i class="fas fa-phone-alt"></i> +6283876459470</li><li><i class="fas fa-map-marker-alt"></i> Bogor, Indonesia</li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copyright"><p>&copy; 2026 HEALTECH. Hak cipta dilindungi.</p></div></div>
+</footer>
+<div class="nav-links-bottom">
+    <a href="../index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+    <a href="../dashboard/dashboard.html"><i class="fas fa-chalkboard-user"></i><span>Dashboard</span></a>
+    <a href="konten.html" class="active"><i class="fas fa-book"></i><span>Konten</span></a>
+    <a href="../plan/plan.html"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+    <a href="../checklist/checklist.html"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+    <a href="../profile/profile.html"><i class="fas fa-user"></i><span>Profil</span></a>
+</div>
+
+<script src="../assets/js/script.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script>
+const contentData = [
+    {
+        id:1, cat:'fitness', icon:'fa-running', title:'Panduan Latihan HIIT untuk Pemula', titleEn:'HIIT Workout Guide for Beginners',
+        badge:'Kebugaran', badgeEn:'Fitness', time:'8 min', featured:true, color:'#007260',
+        img:'../assets/image/GYM.png',
+        desc:'HIIT (High-Intensity Interval Training) adalah metode latihan yang bergantian antara intensitas tinggi dan istirahat singkat. Sangat efektif untuk membakar kalori dan meningkatkan kebugaran kardiovaskular.',
+        descEn:'HIIT (High-Intensity Interval Training) alternates between high-intensity exercise and short rest periods. Extremely effective for burning calories and improving cardiovascular fitness.',
+        tips:['Mulai dengan 15-20 menit untuk pemula','Rasio kerja:istirahat = 1:2 (30 detik kerja, 60 detik istirahat)','Lakukan 3x per minggu dengan hari istirahat di antaranya','Selalu pemanasan 5 menit sebelum memulai','Dengarkan tubuh Anda dan jangan memaksakan diri'],
+        tipsEn:['Start with 15-20 minutes for beginners','Work:rest ratio = 1:2 (30 sec work, 60 sec rest)','Do 3x per week with rest days in between','Always warm up for 5 minutes before starting','Listen to your body and don\'t overdo it'],
+    },
+    {
+        id:2, cat:'nutrition', icon:'fa-apple-alt', title:'10 Makanan Super untuk Imunitas', titleEn:'10 Superfoods for Immunity',
+        badge:'Nutrisi', badgeEn:'Nutrition', time:'5 min', featured:false, color:'#22c55e',
+        img:'../assets/image/NUTRISI.png',
+        desc:'Sistem imun yang kuat adalah fondasi kesehatan. Makanan yang kita konsumsi memiliki dampak besar pada kemampuan tubuh melawan penyakit. Berikut 10 superfood yang terbukti meningkatkan imunitas.',
+        descEn:'A strong immune system is the foundation of health. The foods we eat have a huge impact on our body\'s ability to fight disease. Here are 10 superfoods proven to boost immunity.',
+        tips:['Jeruk & buah sitrus: kaya vitamin C','Jahe: sifat anti-inflamasi alami','Bawang putih: antimikroba alami','Bayam: penuh antioksidan dan vitamin E','Yogurt: probiotik untuk kesehatan usus','Almond: vitamin E dan magnesium','Kunyit: kurkumin anti-inflamasi','Teh hijau: flavonoid dan antioksidan','Brokoli: vitamin C, A, dan E','Kiwi: vitamin C tinggi dan folat'],
+        tipsEn:['Citrus fruits: rich in vitamin C','Ginger: natural anti-inflammatory','Garlic: natural antimicrobial','Spinach: full of antioxidants and vitamin E','Yogurt: probiotics for gut health','Almonds: vitamin E and magnesium','Turmeric: curcumin anti-inflammatory','Green tea: flavonoids and antioxidants','Broccoli: vitamins C, A, and E','Kiwi: high vitamin C and folate'],
+    },
+    {
+        id:3, cat:'sleep', icon:'fa-bed', title:'Tips Tidur Berkualitas 7-8 Jam', titleEn:'Tips for Quality 7-8 Hour Sleep',
+        badge:'Tidur', badgeEn:'Sleep', time:'6 min', featured:false, color:'#8b5cf6',
+        img:'../assets/image/HEALTH.png',
+        desc:'Tidur berkualitas adalah pilar kesehatan yang sering diabaikan. Selama tidur, tubuh memperbaiki sel-sel yang rusak, mengkonsolidasi memori, dan mengatur hormon. Kurang tidur meningkatkan risiko obesitas, diabetes, dan penyakit jantung.',
+        descEn:'Quality sleep is a health pillar that is often overlooked. During sleep, the body repairs damaged cells, consolidates memories, and regulates hormones. Lack of sleep increases the risk of obesity, diabetes, and heart disease.',
+        tips:['Tetapkan jadwal tidur yang konsisten setiap hari','Ciptakan lingkungan tidur yang gelap, sejuk, dan tenang','Hindari kafein setelah jam 2 siang','Batasi layar HP/laptop 1 jam sebelum tidur','Lakukan rutinitas relaksasi: membaca, stretching ringan','Hindari makan berat 3 jam sebelum tidur','Gunakan teknik pernapasan 4-7-8 untuk relaksasi'],
+        tipsEn:['Set a consistent sleep schedule every day','Create a dark, cool, and quiet sleep environment','Avoid caffeine after 2 PM','Limit screen time 1 hour before bed','Do relaxation routines: reading, light stretching','Avoid heavy meals 3 hours before bed','Use 4-7-8 breathing technique for relaxation'],
+    },
+    {
+        id:4, cat:'mental', icon:'fa-brain', title:'Teknik Mindfulness untuk Stres', titleEn:'Mindfulness Techniques for Stress',
+        badge:'Mental', badgeEn:'Mental', time:'7 min', featured:true, color:'#f59e0b',
+        img:'../assets/image/TRACKING.png',
+        desc:'Mindfulness adalah praktik kesadaran penuh terhadap momen saat ini tanpa penilaian. Penelitian menunjukkan bahwa praktik mindfulness rutin dapat mengurangi stres, kecemasan, dan gejala depresi secara signifikan.',
+        descEn:'Mindfulness is the practice of full awareness of the present moment without judgment. Research shows that regular mindfulness practice can significantly reduce stress, anxiety, and depressive symptoms.',
+        tips:['Meditasi napas: fokus pada setiap tarikan dan hembusan napas','Body scan: rasakan sensasi dari kepala ke ujung kaki','Jurnal rasa syukur: catat 3 hal positif setiap malam','Berjalan sadar: perhatikan setiap langkah dan sekitar Anda','5-4-3-2-1 grounding: 5 hal dilihat, 4 didengar, 3 disentuh, 2 dicium, 1 dirasakan'],
+        tipsEn:['Breath meditation: focus on each inhale and exhale','Body scan: feel sensations from head to toe','Gratitude journal: note 3 positive things each night','Mindful walking: notice each step and your surroundings','5-4-3-2-1 grounding: 5 things seen, 4 heard, 3 touched, 2 smelled, 1 tasted'],
+    },
+    {
+        id:5, cat:'fitness', icon:'fa-dumbbell', title:'Latihan Kekuatan di Rumah Tanpa Alat', titleEn:'Home Strength Training Without Equipment',
+        badge:'Kebugaran', badgeEn:'Fitness', time:'10 min', featured:false, color:'#007260',
+        img:'../assets/image/GYM.png',
+        desc:'Anda tidak perlu gym mahal untuk membangun otot dan kekuatan. Latihan bodyweight yang konsisten bisa menghasilkan hasil yang sama efektifnya. Berikut program lengkap latihan kekuatan di rumah.',
+        descEn:'You don\'t need an expensive gym to build muscle and strength. Consistent bodyweight training can produce equally effective results. Here is a complete home strength training program.',
+        tips:['Push-up: 3 set x 10-15 repetisi','Squat: 3 set x 15-20 repetisi','Lunges: 3 set x 10 per kaki','Plank: 3 set x 30-60 detik','Mountain climbers: 3 set x 20 repetisi','Glute bridge: 3 set x 15 repetisi','Istirahat 60 detik antar set'],
+        tipsEn:['Push-ups: 3 sets x 10-15 reps','Squats: 3 sets x 15-20 reps','Lunges: 3 sets x 10 per leg','Plank: 3 sets x 30-60 seconds','Mountain climbers: 3 sets x 20 reps','Glute bridge: 3 sets x 15 reps','Rest 60 seconds between sets'],
+    },
+    {
+        id:6, cat:'women', icon:'fa-venus', title:'Nutrisi Penting Selama Menstruasi', titleEn:'Important Nutrition During Menstruation',
+        badge:'Kesehatan Wanita', badgeEn:"Women's Health", time:'6 min', featured:false, color:'#ec4899',
+        img:'../assets/image/HEALTH.png',
+        desc:'Menstruasi menyebabkan kehilangan zat besi yang signifikan. Pola makan yang tepat dapat mengurangi gejala PMS, kram, dan kelelahan. Nutrisi yang baik juga membantu menjaga keseimbangan hormon.',
+        descEn:'Menstruation causes significant iron loss. The right diet can reduce PMS symptoms, cramps, and fatigue. Good nutrition also helps maintain hormonal balance.',
+        tips:['Zat besi: bayam, daging merah, kacang-kacangan untuk ganti darah','Magnesium: cokelat hitam, alpukat, pisang untuk kurangi kram','Omega-3: ikan salmon, chia seeds untuk anti-inflamasi','Kalsium: susu, keju, yogurt untuk kurangi PMS','Vitamin D: paparan sinar matahari pagi 15-20 menit','Hindari garam berlebihan untuk kurangi kembung','Kurangi kafein dan alkohol selama haid'],
+        tipsEn:['Iron: spinach, red meat, legumes to replace blood loss','Magnesium: dark chocolate, avocado, banana to reduce cramps','Omega-3: salmon, chia seeds for anti-inflammation','Calcium: milk, cheese, yogurt to reduce PMS','Vitamin D: morning sun exposure 15-20 minutes','Avoid excess salt to reduce bloating','Reduce caffeine and alcohol during menstruation'],
+    },
+    {
+        id:7, cat:'nutrition', icon:'fa-utensils', title:'Cara Menghitung Kalori Harian', titleEn:'How to Calculate Daily Calories',
+        badge:'Nutrisi', badgeEn:'Nutrition', time:'7 min', featured:false, color:'#22c55e',
+        img:'../assets/image/NUTRISI.png',
+        desc:'Memahami kebutuhan kalori harian Anda adalah langkah pertama dalam mengelola berat badan. Kalori yang masuk vs keluar menentukan apakah berat badan naik, turun, atau stabil.',
+        descEn:'Understanding your daily calorie needs is the first step in managing weight. Calories in vs out determines whether weight goes up, down, or stays stable.',
+        tips:['Hitung BMR (Basal Metabolic Rate) terlebih dahulu','Wanita: 447.6 + (9.2 x BB) + (3.1 x TB) - (4.3 x usia)','Pria: 88.4 + (13.4 x BB) + (4.8 x TB) - (5.7 x usia)','Kalikan dengan faktor aktivitas (1.2 - 1.9)','Kurangi 500 kalori/hari untuk turun 0.5 kg/minggu','Tambah 300-500 kalori untuk naik berat badan','Gunakan aplikasi tracking makanan untuk monitor'],
+        tipsEn:['Calculate BMR (Basal Metabolic Rate) first','Women: 447.6 + (9.2 x W) + (3.1 x H) - (4.3 x age)','Men: 88.4 + (13.4 x W) + (4.8 x H) - (5.7 x age)','Multiply by activity factor (1.2 - 1.9)','Reduce 500 cal/day to lose 0.5 kg/week','Add 300-500 cal for weight gain','Use food tracking app to monitor'],
+    },
+    {
+        id:8, cat:'mental', icon:'fa-heart', title:'Olahraga dan Kesehatan Mental', titleEn:'Exercise and Mental Health',
+        badge:'Mental', badgeEn:'Mental', time:'5 min', featured:false, color:'#f59e0b',
+        img:'../assets/image/HEALTH.png',
+        desc:'Olahraga tidak hanya baik untuk tubuh, tetapi juga sangat bermanfaat untuk kesehatan mental. Saat berolahraga, otak melepaskan endorfin, serotonin, dan dopamin yang meningkatkan suasana hati.',
+        descEn:'Exercise is not just good for the body, it is also very beneficial for mental health. When exercising, the brain releases endorphins, serotonin, and dopamine that improve mood.',
+        tips:['30 menit olahraga aerobik setara dengan antidepresan ringan','Yoga dan pilates mengurangi kortisol (hormon stres)','Berolahraga di alam meningkatkan efek positif','Olahraga kelompok mengurangi isolasi sosial','Konsistensi lebih penting dari intensitas untuk kesehatan mental','Bahkan 10 menit jalan kaki dapat memperbaiki mood'],
+        tipsEn:['30 minutes aerobic exercise equals mild antidepressants','Yoga and pilates reduce cortisol (stress hormone)','Exercising in nature enhances positive effects','Group exercise reduces social isolation','Consistency is more important than intensity for mental health','Even 10 minutes walking can improve mood'],
+    },
+];
+
+let currentCategory = 'all';
+const lang = () => localStorage.getItem('language') || 'id';
+
+function setCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
+    renderGrid();
+}
+
+function filterContent() {
+    renderGrid();
+}
+
+function getFilteredContent() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    return contentData.filter(c => {
+        const matchCat = currentCategory === 'all' || c.cat === currentCategory;
+        const title = (lang() === 'en' ? c.titleEn : c.title).toLowerCase();
+        const matchSearch = !search || title.includes(search);
+        return matchCat && matchSearch;
+    });
+}
+
+function renderFeatured() {
+    const container = document.getElementById('featuredBanner');
+    if (!container) return;
+    const featured = contentData.filter(c => c.featured);
+    if (featured.length === 0) { container.innerHTML = ''; return; }
+    const f = featured[Math.floor(Date.now() / 3600000) % featured.length];
+    const title = lang() === 'en' ? f.titleEn : f.title;
+    const desc = lang() === 'en' ? f.descEn : f.desc;
+    container.innerHTML = `<div class="featured-card" onclick="openDetail(${f.id})">
+        <div class="featured-overlay">
+            <span class="featured-label"><i class="fas fa-star"></i> ${lang()==='en'?'Featured':'Konten Pilihan'}</span>
+            <h2>${title}</h2>
+            <p>${desc.substring(0,120)}...</p>
+            <button class="btn-read-more">${lang()==='en'?'Read More':'Baca Selengkapnya'} <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>`;
+}
+
+function renderGrid() {
+    const container = document.getElementById('kontenGrid');
+    if (!container) return;
+    const items = getFilteredContent();
+    if (items.length === 0) {
+        container.innerHTML = `<div class="empty-konten"><i class="fas fa-search"></i><p>${lang()==='en'?'No content found':'Konten tidak ditemukan'}</p></div>`;
+        return;
+    }
+    container.innerHTML = items.map(c => {
+        const title = lang() === 'en' ? c.titleEn : c.title;
+        const badge = lang() === 'en' ? c.badgeEn : c.badge;
+        return `<div class="konten-card" onclick="openDetail(${c.id})">
+            <div class="konten-card-img-wrap">
+                <img src="${c.img}" alt="${title}" class="konten-card-img" onerror="this.style.display='none'">
+                <div class="konten-card-img-overlay" style="background:linear-gradient(135deg,${c.color}cc,${c.color}88)"><i class="fas ${c.icon}"></i></div>
+            </div>
+            <div class="konten-card-body">
+                <div class="konten-card-meta"><span class="konten-badge" style="background:${c.color}15;color:${c.color}">${badge}</span><span class="konten-time"><i class="fas fa-clock"></i> ${c.time}</span></div>
+                <h3 class="konten-card-title">${title}</h3>
+                <p class="konten-card-desc">${(lang()==='en'?c.descEn:c.desc).substring(0,90)}...</p>
+                <button class="konten-read-btn">${lang()==='en'?'Read More':'Baca Selengkapnya'} <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function openDetail(id) {
+    const c = contentData.find(x => x.id === id);
+    if (!c) return;
+    const title = lang() === 'en' ? c.titleEn : c.title;
+    const desc = lang() === 'en' ? c.descEn : c.desc;
+    const tips = lang() === 'en' ? c.tipsEn : c.tips;
+    const badge = lang() === 'en' ? c.badgeEn : c.badge;
+    const existing = document.getElementById('contentDetailModal');
+    if (existing) existing.remove();
+    const modal = document.createElement('div');
+    modal.id = 'contentDetailModal';
+    modal.className = 'content-detail-modal';
+    modal.innerHTML = `<div class="content-detail-inner">
+        <div style="position:relative">
+            <div class="konten-card-img-wrap" style="height:220px;border-radius:0">
+                <img src="${c.img}" alt="${title}" class="content-detail-img" onerror="this.style.display='none'">
+                <div style="position:absolute;inset:0;background:linear-gradient(135deg,${c.color}cc,${c.color}44);display:flex;align-items:center;justify-content:center"><i class="fas ${c.icon}" style="font-size:60px;color:white;opacity:0.8"></i></div>
+            </div>
+            <button class="content-detail-close" onclick="document.getElementById('contentDetailModal').remove()">&times;</button>
+        </div>
+        <div class="content-detail-body">
+            <div class="content-detail-meta">
+                <span class="content-detail-badge" style="background:${c.color}15;color:${c.color}">${badge}</span>
+                <span class="content-detail-badge"><i class="fas fa-clock"></i> ${c.time}</span>
+            </div>
+            <h2 class="content-detail-title">${title}</h2>
+            <p class="content-detail-text">${desc}</p>
+            <div class="content-detail-tips">
+                <h4><i class="fas fa-lightbulb"></i> ${lang()==='en'?'Key Points & Tips':'Poin Utama & Tips'}</h4>
+                <ul>${tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
+            </div>
+            <div class="content-detail-actions">
+                <button class="btn-save-content" onclick="saveContent(${c.id});this.innerHTML='<i class=\\'fas fa-check\\'></i> ${lang()==='en'?'Saved':'Tersimpan'}'">
+                    <i class="fas fa-bookmark"></i> ${lang()==='en'?'Save':'Simpan'}
+                </button>
+                <button class="btn-close-content" onclick="document.getElementById('contentDetailModal').remove()">${lang()==='en'?'Close':'Tutup'}</button>
+            </div>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function saveContent(id) {
+    const user = getCurrentUser ? getCurrentUser() : null;
+    if (!user) return;
+    const key = `saved_content_${user.email}`;
+    let saved = [];
+    try { saved = JSON.parse(localStorage.getItem(key)) || []; } catch(e) {}
+    if (!saved.includes(id)) saved.push(id);
+    localStorage.setItem(key, JSON.stringify(saved));
+    if (typeof showToast === 'function') showToast('Konten tersimpan!', 'success');
+}
+
+function updateKontenTexts() {
+    const l = lang();
+    const el = id => document.getElementById(id);
+    if (el('konten-title')) el('konten-title').innerHTML = `<i class="fas fa-book-open"></i> ${l==='en'?'Health Content':'Konten Kesehatan'}`;
+    if (el('konten-subtitle')) el('konten-subtitle').textContent = l==='en'?'Find curated articles, guides, and health tips for you':'Temukan artikel, panduan, dan tips kesehatan terkurasi untuk Anda';
+    const searchInput = el('searchInput');
+    if (searchInput) searchInput.placeholder = l==='en'?'Search content...':'Cari konten...';
+    if (el('lbl-all')) el('lbl-all').textContent = l==='en'?'All':'Semua';
+    if (el('lbl-fitness')) el('lbl-fitness').textContent = l==='en'?'Fitness':'Kebugaran';
+    if (el('lbl-nutrition')) el('lbl-nutrition').textContent = l==='en'?'Nutrition':'Nutrisi';
+    if (el('lbl-mental')) el('lbl-mental').textContent = l==='en'?'Mental':'Mental';
+    if (el('lbl-sleep')) el('lbl-sleep').textContent = l==='en'?'Sleep':'Tidur';
+    if (el('lbl-women')) el('lbl-women').textContent = l==='en'?'Women':'Wanita';
+    renderFeatured();
+    renderGrid();
+}
+window.updateKontenTexts = updateKontenTexts;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cat = urlParams.get('cat');
+    if (cat) setCategory(cat);
+    else { renderFeatured(); renderGrid(); }
+    updateNavbarAvatar && updateNavbarAvatar();
+    document.getElementById('notifBtn')?.addEventListener('click', e => { e.stopPropagation(); if (typeof toggleNotifPanel === 'function') toggleNotifPanel(); });
+});
+
+window.openDetail = openDetail;
+window.setCategory = setCategory;
+window.filterContent = filterContent;
+window.saveContent = saveContent;
+</script>
+</body>
+</html>

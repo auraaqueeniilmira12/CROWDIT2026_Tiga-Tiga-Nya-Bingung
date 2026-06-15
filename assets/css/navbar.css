@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", "Inter", sans-serif;
+  background-color: #f5f7fa;
+  overflow-x: hidden;
+  width: 100%;
+  padding-top: 60px;
+}
+
+.hero-bg-wrapper {
+  background: linear-gradient(
+    135deg,
+    #f8fffe 0%,
+    #c8f5e8 20%,
+    #52c9a0 45%,
+    #38b2ac 65%,
+    #b2dfdb 90%,
+    #e0f2f1 100%
+  );
+  position: relative;
+}
+.navbar {
+  background: transparent;
+  padding: 10px 0 0 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.navbar.scrolled {
+  background: rgba(171, 167, 167, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 5px 0;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  max-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 6px 0;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.logo-img {
+  width: 42px;
+  height: auto;
+}
+.logo h1 {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.logo h1 .heal {
+  color: #007260;
+}
+.logo h1 .tech {
+  color: #000000;
+}
+.nav-links-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+}
+.nav-links-top a {
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  color: #004725;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.nav-links-top a:hover {
+  background: rgba(82, 82, 82, 0.607);
+  transform: translateY(-1px);
+}
+.nav-links-top a.active {
+  background: rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nav-icons button {
+  background: #007260;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-icons button i {
+  color: white;
+  font-size: 16px;
+}
+.nav-icons button:hover {
+  background: #005a4c;
+  transform: scale(1.05);
+}
+.nav-icons img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007260;
+  cursor: pointer;
+}
+.nav-links-bottom {
+  display: none;
+}
+@media (max-width: 768px) {
+  .navbar {
+    top: 0;
+    padding-top: 6px;
+  }
+  .nav-links-top {
+    display: none !important;
+  }
+  .nav-links-bottom {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1a4d3e 0%, #007260 100%);
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 8px 16px;
+    z-index: 1000;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+  }
+  .nav-links-bottom a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 30px;
+  }
+  .nav-links-bottom a i {
+    font-size: 18px;
+  }
+  .nav-links-bottom a.active {
+    background: #4db6ac;
+    color: #1a4d3e;
+  }
+}
+@media (min-width: 769px) {
+  .nav-links-bottom {
+    display: none !important;
+  }
+}
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Pastikan tidak ada space akibat navbar fixed */
+
+.navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+.nav-links-bottom .active {
+  color: #007260 !important;
+}
+.nav-links-bottom .active i {
+  color: #007260 !important;
+}

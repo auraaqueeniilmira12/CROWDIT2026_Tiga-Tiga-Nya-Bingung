@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Dashboard - HEALTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script>if (localStorage.getItem('isLoggedIn') !== 'true') window.location.href = '../loginregister/login.html';</script>
+</head>
+<body>
+<nav class="navbar navbar-fixed">
+    <div class="navbar-container">
+        <div class="logo">
+            <img src="../assets/image/Logo.png" alt="Logo" class="logo-img">
+            <h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1>
+        </div>
+        <div class="nav-links-top">
+            <a href="../index.html">Beranda</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="../konten/konten.html">Konten</a>
+            <a href="../plan/plan.html">Rencana</a>
+            <a href="../checklist/checklist.html">Checklist</a>
+            <a href="../profile/profile.html">Profil</a>
+        </div>
+        <div class="nav-icons">
+            <button id="langBtn"><i class="fas fa-globe"></i> ID</button>
+            <button id="notifBtn"><i class="fas fa-bell"></i></button>
+            <img src="../assets/image/avatar.jpg" alt="profil" onclick="toggleUserMenu()">
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <section class="dashboard-hero-wrapper">
+        <div class="dashboard-hero-container">
+            <div class="greeting-card">
+                <div class="greeting-icon"><i class="fas fa-leaf"></i></div>
+                <div class="greeting-text">
+                    <h2 id="greeting-message">Selamat Pagi,</h2>
+                    <h1 id="user-name">User</h1>
+                    <p id="motivation-quote">Tetap termotivasi untuk hidup sehat hari ini!</p>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card-horizontal" onclick="window.location.href='../checklist/checklist.html'" style="cursor:pointer">
+                    <div class="stat-icon fire"><i class="fas fa-fire"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" id="lbl-streak">STREAK</span>
+                        <span class="stat-value" id="streak-value">0</span>
+                        <span class="stat-unit" id="lbl-streak-unit">hari aktif</span>
+                    </div>
+                </div>
+                <div class="stat-card-horizontal">
+                    <div class="stat-icon trophy"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" id="lbl-achievement">PENCAPAIAN</span>
+                        <span class="stat-value" id="achievement-count">0</span>
+                        <span class="stat-unit" id="lbl-badges">lencana</span>
+                    </div>
+                </div>
+                <div class="stat-card-horizontal" onclick="window.location.href='../plan/plan.html'" style="cursor:pointer">
+                    <div class="stat-icon star"><i class="fas fa-star"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" id="lbl-points">POIN</span>
+                        <span class="stat-value" id="points-value">0</span>
+                        <span class="stat-unit" id="lbl-points-unit">poin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="progress-section">
+        <div class="progress-container">
+            <div class="weight-chart-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 id="lbl-weight-chart">Grafik Berat Badan</h3>
+                    <span class="weight-target" id="weight-target">Target: - kg</span>
+                    <button class="add-weight-btn" onclick="showAddWeightModal()"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="chart-container"><canvas id="weightChart" style="max-width:100%;height:200px;"></canvas></div>
+                <div class="weight-summary">
+                    <div class="weight-current">
+                        <span class="weight-label" id="lbl-current-weight">Berat Saat Ini</span>
+                        <span class="weight-value" id="current-weight">-</span>
+                        <span class="weight-unit">kg</span>
+                    </div>
+                    <div class="weight-bmi-card">
+                        <span class="weight-label">BMI</span>
+                        <span class="weight-value" id="bmi-display">-</span>
+                        <span class="bmi-cat" id="bmi-cat">-</span>
+                    </div>
+                    <div class="weight-difference" id="weight-difference"><i class="fas fa-bullseye"></i><span>-</span></div>
+                </div>
+            </div>
+            <div class="daily-summary-card">
+                <div class="card-header"><i class="fas fa-clipboard-list"></i><h3 id="lbl-today-summary">Ringkasan Hari Ini</h3></div>
+                <div class="summary-list">
+                    <div class="summary-item" onclick="window.location.href='../checklist/checklist.html'" style="cursor:pointer">
+                        <div class="summary-icon green"><i class="fas fa-check-square"></i></div>
+                        <div class="summary-content">
+                            <span class="summary-label" id="lbl-checklist">Checklist</span>
+                            <div class="progress-wrapper"><div class="progress-bar"><div class="progress-fill" id="checklist-progress" style="width:0%"></div></div><span class="progress-text" id="checklist-text">0/6</span></div>
+                        </div>
+                    </div>
+                    <div class="summary-item editable" onclick="editStat('steps')">
+                        <div class="summary-icon blue"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="summary-content">
+                            <span class="summary-label" id="lbl-steps">Langkah</span>
+                            <div class="progress-wrapper"><div class="progress-bar"><div class="progress-fill" id="steps-progress" style="width:0%"></div></div><span class="progress-text" id="steps-text">0/8000</span></div>
+                        </div>
+                        <i class="fas fa-pen edit-icon"></i>
+                    </div>
+                    <div class="summary-item editable" onclick="editStat('water')">
+                        <div class="summary-icon teal"><i class="fas fa-tint"></i></div>
+                        <div class="summary-content">
+                            <span class="summary-label" id="lbl-water">Air</span>
+                            <div class="progress-wrapper"><div class="progress-bar"><div class="progress-fill" id="water-progress" style="width:0%"></div></div><span class="progress-text" id="water-text">0/8 gelas</span></div>
+                        </div>
+                        <i class="fas fa-pen edit-icon"></i>
+                    </div>
+                    <div class="summary-item editable" onclick="editStat('sleep')">
+                        <div class="summary-icon purple"><i class="fas fa-bed"></i></div>
+                        <div class="summary-content">
+                            <span class="summary-label" id="lbl-sleep">Tidur</span>
+                            <div class="progress-wrapper"><div class="progress-bar"><div class="progress-fill" id="sleep-progress" style="width:0%"></div></div><span class="progress-text" id="sleep-text">0/8 jam</span></div>
+                        </div>
+                        <i class="fas fa-pen edit-icon"></i>
+                    </div>
+                    <div class="summary-item editable" onclick="editStat('screentime')">
+                        <div class="summary-icon orange"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="summary-content">
+                            <span class="summary-label" id="lbl-screentime">Waktu Layar</span>
+                            <div class="progress-wrapper"><div class="progress-bar"><div class="progress-fill" id="screentime-progress" style="width:0%"></div></div><span class="progress-text" id="screentime-text">0/4 jam</span></div>
+                        </div>
+                        <i class="fas fa-pen edit-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bmi-dash-section">
+        <div class="bmi-dash-container">
+            <div class="bmi-dash-card">
+                <div class="card-header"><i class="fas fa-calculator"></i><h3>Kalkulator BMI</h3><a href="../index.html#bmi-section" class="view-full-link">Buka Kalkulator <i class="fas fa-external-link-alt"></i></a></div>
+                <div class="bmi-quick-form">
+                    <div class="bmi-quick-inputs">
+                        <input type="number" id="dash-weight" placeholder="Berat (kg)" min="20" max="300">
+                        <input type="number" id="dash-height" placeholder="Tinggi (cm)" min="50" max="250">
+                    </div>
+                    <button onclick="quickBMI()" class="bmi-quick-btn"><i class="fas fa-calculator"></i> Hitung</button>
+                </div>
+                <div class="bmi-quick-result" id="dashBmiResult" style="display:none">
+                    <div class="bmi-quick-number" id="dashBmiNum">-</div>
+                    <div class="bmi-quick-cat" id="dashBmiCat">-</div>
+                </div>
+            </div>
+            <div class="menstrual-dash-card">
+                <div class="card-header"><i class="fas fa-venus"></i><h3>Tracker Menstruasi</h3><a href="../profile/profile.html" class="view-full-link">Lihat Detail <i class="fas fa-arrow-right"></i></a></div>
+                <div id="mensTrackDash" class="mens-dash-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="challenges-content-section">
+        <div class="challenges-content-container">
+            <div class="challenges-card">
+                <div class="card-header"><i class="fas fa-fire"></i><h3 id="lbl-active-challenges">Tantangan Aktif</h3><a href="../plan/plan.html" class="view-full-link">Lihat Semua <i class="fas fa-arrow-right"></i></a></div>
+                <div class="challenges-list" id="challengesList"></div>
+            </div>
+            <div class="daily-content-card">
+                <div class="card-header"><i class="fas fa-bolt"></i><h3 id="lbl-today-content">Konten Hari Ini</h3><span class="refresh-btn" id="refreshContentBtn" onclick="renderDailyContent()"><i class="fas fa-sync-alt"></i></span></div>
+                <div class="daily-content-grid" id="dailyContentGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-recommendation-section">
+        <div class="stats-recommendation-container">
+            <div class="weekly-stats-card">
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h3 id="lbl-weekly-stats">Statistik Mingguan</h3><span class="week-range" id="week-range"></span></div>
+                <div class="stats-grid-2x2">
+                    <div class="stat-box"><div class="stat-box-icon"><i class="fas fa-shoe-prints"></i></div><div class="stat-box-content"><span class="stat-box-label" id="lbl-stat-steps">Langkah</span><span class="stat-box-value" id="stats-steps">-</span><span class="stat-box-trend positive"><i class="fas fa-arrow-up"></i> 12%</span></div></div>
+                    <div class="stat-box"><div class="stat-box-icon"><i class="fas fa-fire"></i></div><div class="stat-box-content"><span class="stat-box-label" id="lbl-stat-calories">Kalori</span><span class="stat-box-value" id="stats-calories">-</span><span class="stat-box-trend positive"><i class="fas fa-arrow-up"></i> 5%</span></div></div>
+                    <div class="stat-box"><div class="stat-box-icon"><i class="fas fa-tint"></i></div><div class="stat-box-content"><span class="stat-box-label" id="lbl-stat-water">Air</span><span class="stat-box-value" id="stats-water">-</span><span class="stat-box-unit">gelas</span><span class="stat-box-trend negative"><i class="fas fa-arrow-down"></i> 3%</span></div></div>
+                    <div class="stat-box"><div class="stat-box-icon"><i class="fas fa-bed"></i></div><div class="stat-box-content"><span class="stat-box-label" id="lbl-stat-sleep">Tidur</span><span class="stat-box-value" id="stats-sleep">-</span><span class="stat-box-unit">jam</span><span class="stat-box-trend positive"><i class="fas fa-arrow-up"></i> 8%</span></div></div>
+                </div>
+            </div>
+            <div class="recommendation-section">
+                <div class="card-header"><i class="fas fa-brain"></i><h3 id="lbl-recommendations">Rekomendasi Untuk Anda</h3><span class="refresh-btn" onclick="renderRecommendations()"><i class="fas fa-sync-alt"></i></span></div>
+                <div class="recommendation-badge"><i class="fas fa-user-circle"></i><span id="recommendation-age-text">Berdasarkan profil Anda</span></div>
+                <ul class="recommendation-list" id="recommendationList"></ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="addWeightModal" class="modal-overlay" style="display:none">
+    <div class="modal-container small">
+        <div class="modal-header"><h3><i class="fas fa-weight-scale"></i> Tambah Data Berat</h3><button class="modal-close" onclick="document.getElementById('addWeightModal').style.display='none'">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Berat Badan (kg)</label><input type="number" id="new-weight-input" placeholder="Contoh: 65" min="20" max="300" step="0.1"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel-modal" onclick="document.getElementById('addWeightModal').style.display='none'">Batal</button>
+                <button class="btn-save-modal" onclick="saveNewWeight()"><i class="fas fa-save"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editStatModal" class="modal-overlay" style="display:none">
+    <div class="modal-container small">
+        <div class="modal-header"><h3 id="editStatTitle">Edit Data</h3><button class="modal-close" onclick="document.getElementById('editStatModal').style.display='none'">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label id="editStatLabel">Nilai</label><input type="number" id="editStatInput" min="0"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel-modal" onclick="document.getElementById('editStatModal').style.display='none'">Batal</button>
+                <button class="btn-save-modal" onclick="saveStatEdit()"><i class="fas fa-save"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col"><div class="footer-logo"><img src="../assets/image/Logo.png" class="footer-logo-img"><h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1></div><p class="footer-tagline">Empowering healthier lives through digital innovation.</p></div>
+        <div class="footer-col"><h4 class="footer-title">Tautan Cepat</h4><ul class="footer-links"><li><a href="../index.html">Beranda</a></li><li><a href="dashboard.html">Dashboard</a></li><li><a href="../konten/konten.html">Konten</a></li><li><a href="../plan/plan.html">Rencana</a></li><li><a href="../checklist/checklist.html">Checklist</a></li><li><a href="../profile/profile.html">Profil</a></li></ul></div>
+        <div class="footer-col"><h4 class="footer-title">Hubungi Kami</h4><ul class="footer-contact"><li><i class="fas fa-envelope"></i> healtech@gmail.com</li><li><i class="fas fa-phone-alt"></i> +6283876459470</li><li><i class="fas fa-map-marker-alt"></i> Bogor, Indonesia</li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copyright"><p>&copy; 2026 HEALTECH. Hak cipta dilindungi.</p></div></div>
+</footer>
+
+<div class="nav-links-bottom">
+    <a href="../index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+    <a href="dashboard.html" class="active"><i class="fas fa-chalkboard-user"></i><span>Dashboard</span></a>
+    <a href="../konten/konten.html"><i class="fas fa-book"></i><span>Konten</span></a>
+    <a href="../plan/plan.html"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+    <a href="../checklist/checklist.html"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+    <a href="../profile/profile.html"><i class="fas fa-user"></i><span>Profil</span></a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../assets/js/script.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

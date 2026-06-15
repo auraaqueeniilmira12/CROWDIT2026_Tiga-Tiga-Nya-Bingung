@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Profil - HEALTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="profile.css">
+    <script>if (localStorage.getItem('isLoggedIn') !== 'true') window.location.href = '../loginregister/login.html';</script>
+    <style>
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
+    .modal-container{background:white;border-radius:20px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+    .modal-container.small{max-width:380px}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .modal-header h3{font-size:16px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px}
+    .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#888;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .modal-close:hover{background:#f0f0f0}
+    .modal-body .form-group{margin-bottom:14px}
+    .modal-body .form-group label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+    .modal-body .form-group input,.modal-body .form-group select,.modal-body .form-group textarea{width:100%;padding:11px 14px;border:2px solid #e8e8e8;border-radius:10px;font-size:14px;font-family:Poppins,sans-serif;outline:none;transition:border 0.2s;color:#1a1a1a}
+    .modal-body .form-group input:focus,.modal-body .form-group select:focus{border-color:#007260}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+    .btn-cancel-modal{background:#f5f5f5;color:#666;border:none;padding:11px 22px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+    .btn-save-modal{background:linear-gradient(135deg,#007260,#4db6ac);color:white;border:none;padding:11px 22px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .symptom-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+    .symptom-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#444;cursor:pointer;padding:8px 10px;border-radius:8px;border:1.5px solid #e8e8e8;transition:all 0.2s}
+    .symptom-check:hover{border-color:#007260;background:#f0faf8}
+    .symptom-check input{accent-color:#007260}
+    .solutions-box{background:#f0faf8;border-radius:12px;padding:16px;border-left:4px solid #007260;margin-top:16px}
+    .solutions-box h4{font-size:13px;font-weight:700;color:#007260;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .solution-item{font-size:12px;color:#444;line-height:1.6;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #e0f2f1}
+    .solution-item:last-child{border-bottom:none;margin-bottom:0}
+    .solution-section{margin-top:12px}
+    .weekly-day-card{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .day-bar-wrap{height:80px;width:28px;background:#f0f0f0;border-radius:10px;display:flex;align-items:flex-end;overflow:hidden}
+    .day-bar-fill{width:100%;border-radius:10px;transition:height 0.4s;min-height:4px}
+    .day-pct{font-size:9px;font-weight:700;color:#666}
+    .day-label{font-size:11px;font-weight:600;color:#888}
+    .level-beginner{background:#f0faf8;color:#007260}
+    .level-intermediate{background:#fff8e1;color:#f59e0b}
+    .level-advanced{background:#fce4ec;color:#e91e63}
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-fixed" style="position:sticky;top:0;z-index:1000;background:white;box-shadow:0 2px 10px rgba(0,0,0,0.08);">
+    <div class="navbar-container">
+        <div class="logo">
+            <img src="../assets/image/Logo.png" alt="Logo" class="logo-img">
+            <h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1>
+        </div>
+        <div class="nav-links-top">
+            <a href="../index.html">Beranda</a>
+            <a href="../dashboard/dashboard.html">Dashboard</a>
+            <a href="../konten/konten.html">Konten</a>
+            <a href="../plan/plan.html">Rencana</a>
+            <a href="../checklist/checklist.html">Checklist</a>
+            <a href="profile.html" class="active">Profil</a>
+        </div>
+        <div class="nav-icons">
+            <button id="langBtn"><i class="fas fa-globe"></i> ID</button>
+            <button id="notifBtn"><i class="fas fa-bell"></i></button>
+            <img src="../assets/image/avatar.jpg" alt="profil" onclick="toggleUserMenu()">
+        </div>
+    </div>
+</nav>
+
+<main class="profile-page-wrapper">
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-cover"></div>
+            <div class="profile-photo-wrapper">
+                <div class="profile-photo" id="profilePhoto">
+                    <img src="../assets/image/avatar.jpg" alt="Foto Profil">
+                </div>
+                <button class="btn-change-photo" id="editPhotoBtn"><i class="fas fa-camera"></i></button>
+            </div>
+            <div class="profile-name-header">
+                <div>
+                    <h1 id="profile-name">User</h1>
+                    <span class="profile-level" id="profile-level">Pemula</span>
+                </div>
+                <button class="btn-edit" id="editProfileBtn"><i class="fas fa-pen"></i> Edit</button>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat-card"><i class="fas fa-fire"></i><span class="stat-value" id="streak-value">0</span><span class="stat-label">Streak</span></div>
+            <div class="stat-card"><i class="fas fa-trophy"></i><span class="stat-value" id="achievement-count">0</span><span class="stat-label">Pencapaian</span></div>
+            <div class="stat-card"><i class="fas fa-check-circle"></i><span class="stat-value" id="program-count">0</span><span class="stat-label">Program</span></div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-user-circle"></i><h3 id="lbl-personal-data">Data Diri</h3><button class="btn-edit" id="editProfileBtn2"><i class="fas fa-pen"></i> Edit</button></div>
+            <div class="profile-info-grid" id="profileInfoGrid">
+                <div class="info-item"><div class="info-icon"><i class="fas fa-envelope"></i></div><div><span class="info-label">EMAIL</span><span class="info-value" id="profile-email">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-user"></i></div><div><span class="info-label">NAMA LENGKAP</span><span class="info-value" id="profile-name-field">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar"></i></div><div><span class="info-label">USIA</span><span class="info-value" id="profile-age">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-venus-mars"></i></div><div><span class="info-label">JENIS KELAMIN</span><span class="info-value" id="profile-gender">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-weight-scale"></i></div><div><span class="info-label">BERAT BADAN</span><span class="info-value" id="profile-weight">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-ruler"></i></div><div><span class="info-label">TINGGI BADAN</span><span class="info-value" id="profile-height">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-chart-line"></i></div><div><span class="info-label">BMI</span><span class="info-value" id="profile-bmi">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-bullseye"></i></div><div><span class="info-label">TUJUAN KESEHATAN</span><span class="info-value" id="profile-goal">-</span></div></div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar-alt"></i></div><div><span class="info-label">BERGABUNG SEJAK</span><span class="info-value" id="profile-joined">-</span></div></div>
+            </div>
+        </div>
+
+        <div class="profile-card" id="card-womens-health">
+            <div class="card-header"><i class="fas fa-venus"></i><h3 id="lbl-women-health">Kesehatan Wanita</h3><button class="btn-edit" id="editCycleBtn"><i class="fas fa-pen"></i> Atur Siklus</button></div>
+            <div class="menstrual-full-panel">
+                <div class="period-prediction-box" id="periodPanel">
+                    <div class="pp-row"><i class="fas fa-calendar-week"></i><span id="cycle-info">Siklus: 28 hari, Haid: 5 hari</span></div>
+                    <div class="pp-row"><i class="fas fa-chart-line"></i><span id="period-prediction-text">Prediksi haid berikutnya: -</span></div>
+                    <div class="pp-row"><i class="fas fa-heart"></i><span id="fertility-text">Masa subur: -</span></div>
+                </div>
+                <div class="menstrual-tabs">
+                    <button class="mens-tab active" onclick="showMensTab('symptoms')"><i class="fas fa-head-side-virus"></i> Gejala & Solusi</button>
+                    <button class="mens-tab" onclick="showMensTab('tracker')"><i class="fas fa-calendar-check"></i> Tracker</button>
+                </div>
+                <div class="mens-tab-content" id="mens-symptoms">
+                    <div class="symptom-tags" id="symptomTags">
+                        <button class="sym-btn" data-symptom="nyeri"><i class="fas fa-bolt"></i> Nyeri Perut</button>
+                        <button class="sym-btn" data-symptom="kembung"><i class="fas fa-circle"></i> Kembung</button>
+                        <button class="sym-btn" data-symptom="mood"><i class="fas fa-face-frown"></i> Mood Swing</button>
+                        <button class="sym-btn" data-symptom="lelah"><i class="fas fa-battery-quarter"></i> Lelah</button>
+                        <button class="sym-btn" data-symptom="kepala"><i class="fas fa-brain"></i> Sakit Kepala</button>
+                        <button class="sym-btn" data-symptom="ngidam"><i class="fas fa-cookie-bite"></i> Ngidam</button>
+                    </div>
+                    <div id="symptomSolutions" class="symptom-solutions"></div>
+                </div>
+                <div class="mens-tab-content" id="mens-tracker" style="display:none">
+                    <div class="cycle-calendar" id="cycleCalendar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-weight-scale"></i><h3 id="lbl-weight-history">Riwayat Berat Badan</h3><button class="btn-edit" id="addWeightBtn"><i class="fas fa-plus"></i> Tambah</button></div>
+            <div class="weight-history-list" id="weightHistoryList"></div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-trophy"></i><h3 id="lbl-achievements">Pencapaian</h3></div>
+            <div class="achievements-grid" id="achievementsGrid"></div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-chart-simple"></i><h3 id="lbl-weekly-activity">Aktivitas Mingguan</h3></div>
+            <div class="weekly-report-grid" id="weeklyReportGrid"></div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-bell"></i><h3 id="lbl-reminders">Pengingat</h3></div>
+            <div class="alarm-row" id="alarmContainer">
+                <div class="alarm-item"><i class="fas fa-tint"></i> Minum air <span id="water-reminder-time">08:00</span><button onclick="editAlarm('water')"><i class="fas fa-pen"></i></button></div>
+                <div class="alarm-item"><i class="fas fa-running"></i> Olahraga <span id="exercise-reminder-time">17:00</span><button onclick="editAlarm('exercise')"><i class="fas fa-pen"></i></button></div>
+                <div class="alarm-item"><i class="fas fa-pills"></i> Obat <span id="med-reminder-time">20:00</span><button onclick="editAlarm('med')"><i class="fas fa-pen"></i></button></div>
+            </div>
+            <button class="prof-btn-green" id="addAlarmBtn"><i class="fas fa-plus"></i> Tambah Pengingat</button>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-header"><i class="fas fa-cog"></i><h3 id="lbl-account">Akun</h3></div>
+            <div class="menu-list">
+                <div class="menu-item danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="editProfileModal" class="modal-overlay" style="display:none">
+    <div class="modal-container">
+        <div class="modal-header"><h3><i class="fas fa-user-edit"></i> Edit Profil</h3><button class="modal-close" onclick="document.getElementById('editProfileModal').style.display='none'">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="edit-name" placeholder="Nama lengkap Anda"></div>
+            <div class="form-row">
+                <div class="form-group"><label>Usia (tahun)</label><input type="number" id="edit-age" min="5" max="120" placeholder="25"></div>
+                <div class="form-group"><label>Jenis Kelamin</label><select id="edit-gender"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Berat Badan (kg)</label><input type="number" id="edit-weight" min="20" max="300" step="0.1" placeholder="65"></div>
+                <div class="form-group"><label>Tinggi Badan (cm)</label><input type="number" id="edit-height" min="50" max="250" placeholder="165"></div>
+            </div>
+            <div class="form-group"><label>Target Berat (kg)</label><input type="number" id="edit-target-weight" min="20" max="300" step="0.1" placeholder="60"></div>
+            <div class="form-group"><label>Tujuan Kesehatan</label><select id="edit-goal">
+                <option value="">Pilih tujuan</option>
+                <option value="Turun berat badan">Turun berat badan</option>
+                <option value="Naik berat badan">Naik berat badan</option>
+                <option value="Jaga berat badan">Jaga berat badan</option>
+                <option value="Tingkatkan kebugaran">Tingkatkan kebugaran</option>
+                <option value="Hidup lebih sehat">Hidup lebih sehat</option>
+            </select></div>
+            <div class="modal-actions">
+                <button class="btn-cancel-modal" onclick="document.getElementById('editProfileModal').style.display='none'">Batal</button>
+                <button class="btn-save-modal" onclick="saveProfile()"><i class="fas fa-save"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col"><div class="footer-logo"><img src="../assets/image/Logo.png" class="footer-logo-img"><h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1></div><p class="footer-tagline">Empowering healthier lives through digital innovation.</p></div>
+        <div class="footer-col"><h4 class="footer-title">Tautan Cepat</h4><ul class="footer-links"><li><a href="../index.html">Beranda</a></li><li><a href="../dashboard/dashboard.html">Dashboard</a></li><li><a href="../konten/konten.html">Konten</a></li><li><a href="../plan/plan.html">Rencana</a></li><li><a href="../checklist/checklist.html">Checklist</a></li><li><a href="profile.html">Profil</a></li></ul></div>
+        <div class="footer-col"><h4 class="footer-title">Hubungi Kami</h4><ul class="footer-contact"><li><i class="fas fa-envelope"></i> healtech@gmail.com</li><li><i class="fas fa-phone-alt"></i> +6283876459470</li><li><i class="fas fa-map-marker-alt"></i> Bogor, Indonesia</li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copyright"><p>&copy; 2026 HEALTECH. Hak cipta dilindungi.</p></div></div>
+</footer>
+
+<div class="nav-links-bottom">
+    <a href="../index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+    <a href="../dashboard/dashboard.html"><i class="fas fa-chalkboard-user"></i><span>Dashboard</span></a>
+    <a href="../konten/konten.html"><i class="fas fa-book"></i><span>Konten</span></a>
+    <a href="../plan/plan.html"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+    <a href="../checklist/checklist.html"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+    <a href="profile.html" class="active"><i class="fas fa-user"></i><span>Profil</span></a>
+</div>
+
+<script src="../assets/js/script.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="profile.js"></script>
+<script>
+function showMensTab(tab) {
+    document.querySelectorAll('.mens-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.mens-tab-content').forEach(c => c.style.display = 'none');
+    document.getElementById('mens-' + tab).style.display = 'block';
+    event.target.closest('.mens-tab').classList.add('active');
+    if (tab === 'tracker') renderCycleCalendar();
+}
+
+function renderCycleCalendar() {
+    const user = getCurrentUser ? getCurrentUser() : null;
+    const container = document.getElementById('cycleCalendar');
+    if (!container) return;
+    const data = localStorage.getItem(`menstrual_${user?.email}`);
+    if (!data) { container.innerHTML = '<p style="text-align:center;color:#888;padding:20px;">Atur siklus terlebih dahulu</p>'; return; }
+    try {
+        const d = JSON.parse(data);
+        const lastDate = new Date(d.lastDate);
+        const cycleLen = d.cycleLength || 28;
+        const periodLen = d.periodLength || 5;
+        const today = new Date();
+        const nextDate = new Date(lastDate); nextDate.setDate(nextDate.getDate() + cycleLen);
+        const fertileStart = new Date(nextDate); fertileStart.setDate(nextDate.getDate() - 16);
+        const fertileEnd = new Date(nextDate); fertileEnd.setDate(nextDate.getDate() - 10);
+        const start = new Date(today); start.setDate(today.getDate() - 14);
+        let html = '<div class="cal-grid">';
+        for (let i = 0; i < 35; i++) {
+            const d2 = new Date(start); d2.setDate(start.getDate() + i);
+            const isPeriod = d2 >= lastDate && d2 < new Date(lastDate.getTime() + periodLen*86400000);
+            const isFertile = d2 >= fertileStart && d2 <= fertileEnd;
+            const isToday = d2.toDateString() === today.toDateString();
+            let cls = 'cal-day';
+            if (isPeriod) cls += ' period-day';
+            else if (isFertile) cls += ' fertile-day';
+            if (isToday) cls += ' today-day';
+            html += `<div class="${cls}" title="${d2.toLocaleDateString('id-ID')}"><span>${d2.getDate()}</span></div>`;
+        }
+        html += '</div><div class="cal-legend"><span class="leg period-day">Haid</span><span class="leg fertile-day">Subur</span><span class="leg today-day">Hari ini</span></div>';
+        container.innerHTML = html;
+    } catch(e) { container.innerHTML = '<p style="text-align:center;color:#888;">Error memuat kalender</p>'; }
+}
+
+const symptomSolutionMap = {
+    nyeri: { title: 'Nyeri Perut', icon: 'fa-bolt', solutions: ['Kompres hangat di area perut 15-20 menit', 'Konsumsi ibuprofen/paracetamol sesuai dosis', 'Yoga pose child\'s pose atau cat-cow stretch', 'Teh jahe atau chamomile hangat', 'Hindari kafein dan makanan berlemak'] },
+    kembung: { title: 'Kembung', icon: 'fa-circle', solutions: ['Hindari makanan asin, bergas, dan bersoda', 'Minum teh peppermint atau jahe', 'Olahraga ringan seperti jalan santai', 'Perbanyak minum air putih hangat', 'Kurangi konsumsi susu & produk dairy'] },
+    mood: { title: 'Mood Swing', icon: 'fa-face-frown', solutions: ['Meditasi 10 menit setiap pagi', 'Konsumsi dark chocolate secukupnya', 'Journaling perasaan setiap hari', 'Cerita ke orang terpercaya', 'Olahraga ringan untuk lepas endorfin'] },
+    lelah: { title: 'Kelelahan', icon: 'fa-battery-quarter', solutions: ['Istirahat cukup 8-9 jam per malam', 'Konsumsi makanan kaya zat besi (bayam, daging)', 'Vitamin B12 dan suplemen zat besi', 'Tidur siang singkat 20-30 menit', 'Kurangi aktivitas berat selama haid'] },
+    kepala: { title: 'Sakit Kepala', icon: 'fa-brain', solutions: ['Perbanyak minum air putih (dehidrasi sering jadi penyebab)', 'Istirahat di ruangan tenang dan gelap', 'Kompres dingin di dahi atau belakang leher', 'Hindari layar HP berlebihan', 'Paracetamol/ibuprofen jika perlu'] },
+    ngidam: { title: 'Ngidam', icon: 'fa-cookie-bite', solutions: ['Pilih camilan sehat: buah, kacang, dark chocolate', 'Hindari gula berlebihan dan makanan olahan', 'Makan lebih sering dalam porsi kecil', 'Magnesium dari pisang, alpukat, dan kacang', 'Tetap terhidrasi dengan baik'] },
+};
+
+document.querySelectorAll('.sym-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        showSymptomSolutions();
+    });
+});
+
+function showSymptomSolutions() {
+    const active = [...document.querySelectorAll('.sym-btn.active')].map(b => b.dataset.symptom);
+    const container = document.getElementById('symptomSolutions');
+    if (!container) return;
+    if (active.length === 0) { container.innerHTML = ''; return; }
+    container.innerHTML = active.map(sym => {
+        const s = symptomSolutionMap[sym];
+        if (!s) return '';
+        return `<div class="solution-block">
+            <div class="solution-block-header"><i class="fas ${s.icon}"></i> ${s.title}</div>
+            <ul class="solution-list">${s.solutions.map(sol => `<li><i class="fas fa-check-circle"></i> ${sol}</li>`).join('')}</ul>
+        </div>`;
+    }).join('');
+}
+window.showMensTab = showMensTab;
+</script>
+</body>
+</html>

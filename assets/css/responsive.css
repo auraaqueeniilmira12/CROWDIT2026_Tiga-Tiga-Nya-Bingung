@@ -1,0 +1,171 @@
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+    .hero-section {
+        margin-top: 30px;
+        padding: 0 0 30px 0;
+    }
+    .hero-container {
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 20px;
+        text-align: center;
+    }
+    .hero-title {
+        font-size: 28px;
+    }
+    .hero-description {
+        font-size: 13px;
+        text-align: justify;
+    }
+    .hero-image img {
+        width: 70%;
+        max-width: 260px;
+    }
+    .about-section {
+        padding: 50px 20px;
+    }
+    .about-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .about-categories {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    .stats-buttons-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .features-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 16px;
+        padding: 10px 20px;
+        width: max-content;
+        min-width: 100%;
+    }
+    .feature-card-link {
+        flex: 0 0 280px;
+        width: 280px;
+    }
+    .testimonials-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 20px;
+        padding: 10px 20px;
+        width: max-content;
+        min-width: 100%;
+    }
+    .testimonial-card {
+        flex: 0 0 300px;
+        width: 300px;
+    }
+    .testimonials-summary {
+        display: none;
+    }
+    .footer {
+        padding: 40px 20px 20px;
+        margin-bottom: 70px;
+    }
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 24px;
+    }
+    .about-categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .feature-card-link {
+        flex: 0 0 260px;
+        width: 260px;
+    }
+    .testimonial-card {
+        flex: 0 0 280px;
+        width: 280px;
+    }
+}
+@media (min-width: 769px) {
+    .nav-links-bottom {
+        display: none !important;
+    }
+    .nav-links-top {
+        display: flex !important;
+    }
+}
+@media (max-width: 1024px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-container { grid-template-columns: 1fr; }
+    .about-img { height: 280px; }
+    .hero-container { grid-template-columns: 1fr; padding: 40px 24px 0; min-height: auto; }
+    .hero-image { display: none; }
+    .hero-text { padding-bottom: 40px; }
+    .hero-title { font-size: 30px; }
+    .bmi-card-wrapper { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .about-categories { grid-template-columns: repeat(3, 1fr); }
+    .hero-title { font-size: 26px; }
+    .features-title { font-size: 22px; }
+    .about-title { font-size: 22px; }
+    .stats-buttons-row { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-categories { grid-template-columns: repeat(2, 1fr); }
+    .hero-buttons { flex-direction: column; }
+    .hero-buttons button { width: 100%; justify-content: center; }
+    .bmi-details-grid { grid-template-columns: 1fr 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .navbar-container { padding: 0 14px; }
+    .nav-links-top { display: none; }
+    .hero-container { flex-direction: column; padding: 20px 16px 0; gap: 0; }
+    .hero-text { order: 1; text-align: center; }
+    .hero-image { order: 2; }
+    .hero-title { font-size: 26px; }
+    .hero-description { font-size: 13px; }
+    .hero-buttons { justify-content: center; }
+    .hero-social-links { justify-content: center; }
+    .about-container { flex-direction: column; padding: 40px 16px; gap: 24px; }
+    .about-categories { grid-template-columns: repeat(2, 1fr); }
+    .stats-buttons-row { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .features-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .features-container { padding: 40px 16px; }
+    .bmi-card-wrapper { grid-template-columns: 1fr; }
+    .footer-container { flex-direction: column; padding: 24px 16px; gap: 20px; }
+    .nav-links-bottom { display: flex; }
+    .summary-cards { grid-template-columns: 1fr 1fr; }
+    .active-challenges-grid, .all-challenges-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-info .stat-value { font-size: 18px; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 22px; }
+    .about-categories { grid-template-columns: 1fr 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .about-right, .about-left { width: 100%; }
+    .konten-grid { grid-template-columns: 1fr; }
+    .profile-info-grid { grid-template-columns: 1fr; }
+    .bmi-details-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid-2x2 { grid-template-columns: 1fr 1fr; }
+    .summary-cards { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 769px) {
+    .nav-links-bottom { display: none !important; }
+    .hamburger-btn { display: none !important; }
+}

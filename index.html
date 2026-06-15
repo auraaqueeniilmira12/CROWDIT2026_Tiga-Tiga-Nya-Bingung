@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HEALTECH - Healthy Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+<body>
+<div class="hero-bg-wrapper">
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="assets/image/Logo.png" alt="Logo HealTech" class="logo-img">
+                <h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1>
+            </div>
+            <div class="nav-links-top">
+                <a href="index.html" class="active">Beranda</a>
+                <a href="dashboard/dashboard.html">Dashboard</a>
+                <a href="konten/konten.html">Konten</a>
+                <a href="plan/plan.html">Rencana</a>
+                <a href="checklist/checklist.html">Checklist</a>
+                <a href="profile/profile.html">Profil</a>
+            </div>
+            <div class="nav-icons">
+                <button id="langBtn"><i class="fas fa-globe"></i> ID</button>
+                <button id="notifBtn"><i class="fas fa-bell"></i></button>
+                <img src="assets/image/avatar.jpg" alt="profil" onclick="toggleUserMenu()">
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-text">
+                <p class="hero-tagline">KESEHATAN ANDA, PRIORITAS KAMI</p>
+                <h1 class="hero-title">Bangun Hidup <br><span class="highlight">Lebih Sehat dengan Healtech</span></h1>
+                <p class="hero-description">Platform all-in-one untuk membantu Anda mencapai tubuh ideal dengan latihan, nutrisi, dan tracking yang personal. Dapatkan hasil maksimal dengan panduan yang disesuaikan dengan kebutuhan Anda.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="window.location.href='konten/konten.html'">Mulai Sekarang</button>
+                    <button class="btn-secondary" onclick="document.getElementById('bmi-section').scrollIntoView({behavior:'smooth'})"><i class="fas fa-calculator"></i> Kalkulator BMI</button>
+                </div>
+                <div class="hero-social-links">
+                    <a href="https://www.instagram.com/healtech" target="_blank" class="social-hero-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@healtech" target="_blank" class="social-hero-btn"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/c/healtech" target="_blank" class="social-hero-btn"><i class="fab fa-youtube"></i></a>
+                    <a href="https://twitter.com/healtech" target="_blank" class="social-hero-btn"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="assets/image/doctor home.png" alt="HealTech Doctor" class="doctor-float">
+            </div>
+        </div>
+    </section>
+</div>
+
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-left">
+            <div class="image-wrapper">
+                <img src="assets/image/about.jpg" alt="HealTech" class="about-img">
+            </div>
+        </div>
+        <div class="about-right">
+            <div class="about-header">
+                <span class="about-badge"><i class="fas fa-info-circle"></i> TENTANG KAMI</span>
+                <h2 class="about-title">Mewujudkan <span class="title-highlight">Gaya Hidup Lebih Sehat</span> Melalui Inovasi Digital</h2>
+                <div class="title-underline"></div>
+            </div>
+            <p class="about-description">HealTech adalah platform kesehatan digital yang menggabungkan teknologi <span class="text-highlight">edukasi, kebugaran, dan nutrisi</span> menjadi satu ekosistem terintegrasi. Kami percaya kesehatan adalah hak setiap orang.</p>
+            <div class="about-categories">
+                <a href="konten/konten.html?cat=fitness" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-running"></i></div><h4>Edukasi</h4><p>Artikel & video</p></div></a>
+                <a href="konten/konten.html?cat=nutrition" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-carrot"></i></div><h4>Gizi</h4><p>Info nutrisi</p></div></a>
+                <a href="konten/konten.html?cat=fitness" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-heartbeat"></i></div><h4>Kebugaran</h4><p>Latihan rutin</p></div></a>
+                <a href="plan/plan.html" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-calendar-check"></i></div><h4>Rencana</h4><p>Rencana personal</p></div></a>
+                <a href="checklist/checklist.html" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-chart-line"></i></div><h4>Jurnal</h4><p>Tracking harian</p></div></a>
+                <a href="konten/konten.html?cat=age" class="category-card-link"><div class="category-card"><div class="category-icon"><i class="fas fa-child"></i></div><h4>By Age</h4><p>Sesuai usia</p></div></a>
+            </div>
+            <div class="about-audience">
+                <span class="audience-chip"><i class="fas fa-check-circle"></i> Remaja</span>
+                <span class="audience-chip"><i class="fas fa-check-circle"></i> Dewasa</span>
+                <span class="audience-chip"><i class="fas fa-check-circle"></i> Lansia</span>
+                <span class="audience-chip"><i class="fas fa-venus-mars"></i> Pria & Wanita</span>
+            </div>
+            <div class="stats-buttons-row">
+                <div class="about-stats">
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div><span class="stat-number">10K+</span><span class="stat-label">Pengguna Aktif</span></div></div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-book-open"></i></div><div><span class="stat-number">5+</span><span class="stat-label">Program</span></div></div>
+                </div>
+                <div class="about-buttons">
+                    <button class="about-btn-primary" onclick="window.location.href='konten/konten.html'">Jelajahi Fitur <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="features-container">
+        <div class="features-header">
+            <h2 class="features-title">FITUR UNGGULAN</h2>
+            <p class="features-subtitle"><i class="fas fa-heartbeat"></i> SEMUA YANG ANDA BUTUHKAN UNTUK MENCAPAI TUJUAN KEBUGARAN <i class="fas fa-heartbeat"></i></p>
+        </div>
+        <div class="features-grid-wrapper">
+            <div class="features-grid">
+                <div class="feature-card-link" onclick="window.location.href='konten/konten.html?cat=fitness'">
+                    <div class="feature-card"><img src="assets/image/GYM.png" alt="Program Latihan" class="feature-img"><h3 class="feature-name">PROGRAM LATIHAN</h3><p class="feature-description">Program latihan personal yang disesuaikan dengan target tubuh dan level kebugaran Anda.</p><span class="feature-link">Mulai <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+                <div class="feature-card-link" onclick="window.location.href='konten/konten.html?cat=nutrition'">
+                    <div class="feature-card"><img src="assets/image/NUTRISI.png" alt="Panduan Gizi" class="feature-img"><h3 class="feature-name">PANDUAN GIZI</h3><p class="feature-description">Rencana makan sehat dan kalkulasi kalori harian yang disesuaikan dengan target tubuh Anda.</p><span class="feature-link">Mulai <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+                <div class="feature-card-link" onclick="window.location.href='konten/konten.html?cat=tracking'">
+                    <div class="feature-card"><img src="assets/image/TRACKING.png" alt="Pelacakan Progres" class="feature-img"><h3 class="feature-name">PELACAKAN PROGRES</h3><p class="feature-description">Pantau progres berat badan, performa latihan, dan pencapaian kebugaran Anda.</p><span class="feature-link">Mulai <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+                <div class="feature-card-link" onclick="window.location.href='konten/konten.html?cat=habits'">
+                    <div class="feature-card"><img src="assets/image/HEALTH.png" alt="Kebiasaan Sehat" class="feature-img"><h3 class="feature-name">KEBIASAAN SEHAT</h3><p class="feature-description">Lacak asupan air, kualitas tidur, dan aktivitas harian untuk membangun kebiasaan lebih sehat.</p><span class="feature-link">Mulai <i class="fas fa-arrow-right"></i></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bmi-section" id="bmi-section">
+    <div class="bmi-container">
+        <div class="bmi-header">
+            <span class="section-badge"><i class="fas fa-calculator"></i> KALKULATOR</span>
+            <h2>Kalkulator <span class="highlight-green">Berat & Tinggi Badan</span></h2>
+            <p>Hitung BMI Anda dan ketahui kategori berat badan ideal</p>
+        </div>
+        <div class="bmi-card-wrapper">
+            <div class="bmi-input-card">
+                <div class="bmi-form">
+                    <div class="bmi-field">
+                        <label><i class="fas fa-weight-scale"></i> <span id="lbl-weight">Berat Badan (kg)</span></label>
+                        <input type="number" id="bmi-weight" placeholder="Contoh: 65" min="20" max="300">
+                    </div>
+                    <div class="bmi-field">
+                        <label><i class="fas fa-ruler-vertical"></i> <span id="lbl-height">Tinggi Badan (cm)</span></label>
+                        <input type="number" id="bmi-height" placeholder="Contoh: 165" min="50" max="250">
+                    </div>
+                    <div class="bmi-field">
+                        <label><i class="fas fa-calendar"></i> Usia (tahun)</label>
+                        <input type="number" id="bmi-age" placeholder="Contoh: 25" min="5" max="120">
+                    </div>
+                    <div class="bmi-field">
+                        <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                        <select id="bmi-gender">
+                            <option value="pria">Pria</option>
+                            <option value="wanita">Wanita</option>
+                        </select>
+                    </div>
+                    <button class="bmi-calculate-btn" onclick="calculateBMI()" id="btn-calculate"><i class="fas fa-calculator"></i> Hitung BMI</button>
+                </div>
+            </div>
+            <div class="bmi-result-card" id="bmiResult" style="display:none">
+                <div class="bmi-circle-wrapper">
+                    <div class="bmi-circle" id="bmiCircle">
+                        <span class="bmi-number" id="bmiNumber">0</span>
+                        <span class="bmi-unit">BMI</span>
+                    </div>
+                </div>
+                <div class="bmi-category" id="bmiCategory">Normal</div>
+                <div class="bmi-details-grid">
+                    <div class="bmi-detail-item"><i class="fas fa-weight-scale"></i><span id="bmi-detail-weight">-</span><small>Berat</small></div>
+                    <div class="bmi-detail-item"><i class="fas fa-ruler-vertical"></i><span id="bmi-detail-height">-</span><small>Tinggi</small></div>
+                    <div class="bmi-detail-item"><i class="fas fa-bullseye"></i><span id="bmi-ideal-weight">-</span><small>Berat Ideal</small></div>
+                    <div class="bmi-detail-item"><i class="fas fa-fire"></i><span id="bmi-calories">-</span><small>Kalori/Hari</small></div>
+                </div>
+                <div class="bmi-scale">
+                    <div class="bmi-scale-bar">
+                        <div class="bmi-scale-segment seg-underweight">Kurang</div>
+                        <div class="bmi-scale-segment seg-normal">Normal</div>
+                        <div class="bmi-scale-segment seg-overweight">Lebih</div>
+                        <div class="bmi-scale-segment seg-obese">Obesitas</div>
+                    </div>
+                    <div class="bmi-indicator" id="bmiIndicator" style="left:50%"></div>
+                </div>
+                <div class="bmi-advice" id="bmiAdvice"></div>
+                <button class="bmi-reset-btn" onclick="resetBMI()"><i class="fas fa-redo"></i> Hitung Ulang</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col"><div class="footer-logo"><img src="assets/image/Logo.png" class="footer-logo-img"><h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1></div><p class="footer-tagline">Empowering healthier lives through digital innovation and personalized wellness solutions.</p></div>
+        <div class="footer-col"><h4 class="footer-title">Tautan Cepat</h4><ul class="footer-links"><li><a href="index.html">Beranda</a></li><li><a href="dashboard/dashboard.html">Dashboard</a></li><li><a href="konten/konten.html">Konten</a></li><li><a href="plan/plan.html">Rencana</a></li><li><a href="checklist/checklist.html">Checklist</a></li><li><a href="profile/profile.html">Profil</a></li></ul></div>
+        <div class="footer-col"><h4 class="footer-title">Hubungi Kami</h4><ul class="footer-contact"><li><i class="fas fa-envelope"></i> healtech@gmail.com</li><li><i class="fas fa-phone-alt"></i> +6283876459470</li><li><i class="fas fa-map-marker-alt"></i> Bogor, Indonesia</li></ul><div class="footer-social-text"><a href="#" class="social-text-link">Instagram</a><a href="#" class="social-text-link">Facebook</a><a href="#" class="social-text-link">Twitter</a><a href="#" class="social-text-link">YouTube</a><a href="#" class="social-text-link">TikTok</a></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copyright"><p>&copy; 2026 HEALTECH. Hak cipta dilindungi.</p></div></div>
+</footer>
+
+<div class="nav-links-bottom">
+    <a href="index.html" class="active"><i class="fas fa-home"></i><span>Beranda</span></a>
+    <a href="dashboard/dashboard.html"><i class="fas fa-chalkboard-user"></i><span>Dashboard</span></a>
+    <a href="konten/konten.html"><i class="fas fa-book"></i><span>Konten</span></a>
+    <a href="plan/plan.html"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+    <a href="checklist/checklist.html"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+    <a href="profile/profile.html"><i class="fas fa-user"></i><span>Profil</span></a>
+</div>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/ui.js"></script>
+<script>
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('bmi-weight').value);
+    const height = parseFloat(document.getElementById('bmi-height').value);
+    const age = parseFloat(document.getElementById('bmi-age').value);
+    const gender = document.getElementById('bmi-gender').value;
+
+    if (!weight || !height || weight < 20 || height < 50) {
+        showToast('Masukkan berat dan tinggi badan yang valid', 'error'); return;
+    }
+
+    const heightM = height / 100;
+    const bmi = weight / (heightM * heightM);
+    const bmiRounded = Math.round(bmi * 10) / 10;
+
+    let category, color, advice, indicator;
+    if (bmi < 18.5) {
+        category = currentLang === 'en' ? 'Underweight' : 'Berat Badan Kurang';
+        color = '#3b82f6'; indicator = 12;
+        advice = currentLang === 'en' ? 'Your weight is below normal. Increase calorie intake with nutritious foods and consult a doctor.' : 'Berat badan Anda di bawah normal. Tingkatkan asupan kalori dengan makanan bergizi dan konsultasikan dengan dokter.';
+    } else if (bmi < 25) {
+        category = currentLang === 'en' ? 'Normal Weight' : 'Berat Badan Normal';
+        color = '#22c55e'; indicator = 38;
+        advice = currentLang === 'en' ? 'Your weight is ideal. Maintain a healthy lifestyle with regular exercise and balanced nutrition.' : 'Berat badan Anda ideal. Pertahankan gaya hidup sehat dengan olahraga teratur dan nutrisi seimbang.';
+    } else if (bmi < 30) {
+        category = currentLang === 'en' ? 'Overweight' : 'Berat Badan Berlebih';
+        color = '#f59e0b'; indicator = 62;
+        advice = currentLang === 'en' ? 'Your weight is above normal. Regular exercise 3-5x/week and reduce calorie intake are recommended.' : 'Berat badan Anda di atas normal. Disarankan olahraga rutin 3-5x/minggu dan kurangi asupan kalori.';
+    } else {
+        category = currentLang === 'en' ? 'Obese' : 'Obesitas';
+        color = '#ef4444'; indicator = 85;
+        advice = currentLang === 'en' ? 'Your weight falls in the obese category. Consult a doctor or nutritionist for an appropriate diet and exercise program.' : 'Berat badan Anda masuk kategori obesitas. Konsultasikan dengan dokter atau ahli gizi untuk program diet dan olahraga yang tepat.';
+    }
+
+    const idealMin = Math.round(18.5 * heightM * heightM * 10) / 10;
+    const idealMax = Math.round(24.9 * heightM * heightM * 10) / 10;
+    let bmr, calories;
+    if (age && gender) {
+        if (gender === 'pria') bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * (age || 25));
+        else bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * (age || 25));
+        calories = Math.round(bmr * 1.375);
+    }
+
+    document.getElementById('bmiResult').style.display = 'flex';
+    document.getElementById('bmiNumber').textContent = bmiRounded;
+    document.getElementById('bmiCategory').textContent = category;
+    document.getElementById('bmiCategory').style.color = color;
+    document.getElementById('bmiCircle').style.borderColor = color;
+    document.getElementById('bmiCircle').style.boxShadow = `0 0 30px ${color}40`;
+    document.getElementById('bmi-detail-weight').textContent = weight + ' kg';
+    document.getElementById('bmi-detail-height').textContent = height + ' cm';
+    document.getElementById('bmi-ideal-weight').textContent = `${idealMin}-${idealMax} kg`;
+    document.getElementById('bmi-calories').textContent = calories ? calories + ' kkal' : '-';
+    document.getElementById('bmiIndicator').style.left = indicator + '%';
+    document.getElementById('bmiIndicator').style.background = color;
+    document.getElementById('bmiAdvice').innerHTML = `<i class="fas fa-lightbulb"></i> ${advice}`;
+    document.getElementById('bmiResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetBMI() {
+    document.getElementById('bmi-weight').value = '';
+    document.getElementById('bmi-height').value = '';
+    document.getElementById('bmi-age').value = '';
+    document.getElementById('bmiResult').style.display = 'none';
+}
+
+function updateBMITexts() {
+    const lw = document.getElementById('lbl-weight');
+    const lh = document.getElementById('lbl-height');
+    const bc = document.getElementById('btn-calculate');
+    if (lw) lw.textContent = currentLang === 'en' ? 'Weight (kg)' : 'Berat Badan (kg)';
+    if (lh) lh.textContent = currentLang === 'en' ? 'Height (cm)' : 'Tinggi Badan (cm)';
+    if (bc) bc.innerHTML = `<i class="fas fa-calculator"></i> ${currentLang === 'en' ? 'Calculate BMI' : 'Hitung BMI'}`;
+    const bmiTitle = document.querySelector('.bmi-header h2');
+    if (bmiTitle) bmiTitle.innerHTML = currentLang === 'en' ? 'Weight & Height <span class="highlight-green">Calculator</span>' : 'Kalkulator <span class="highlight-green">Berat & Tinggi Badan</span>';
+}
+window.updateBMITexts = updateBMITexts;
+
+document.getElementById('notifBtn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (typeof toggleNotifPanel === 'function') toggleNotifPanel();
+});
+</script>
+</body>
+</html>

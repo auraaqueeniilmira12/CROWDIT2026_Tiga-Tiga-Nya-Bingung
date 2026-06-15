@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - HEALTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Poppins',sans-serif;min-height:100vh;background:linear-gradient(135deg,#007260 0%,#4db6ac 50%,#80cbc4 100%);display:flex;align-items:center;justify-content:center;padding:20px}
+    .auth-wrapper{width:100%;max-width:480px}
+    .auth-logo{text-align:center;margin-bottom:24px}
+    .auth-logo img{width:56px;height:56px;border-radius:14px;margin-bottom:8px}
+    .auth-logo h1{font-size:26px;font-weight:900;color:white}
+    .auth-logo p{color:rgba(255,255,255,0.85);font-size:12px}
+    .auth-card{background:white;border-radius:24px;padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+    .auth-title{font-size:20px;font-weight:800;color:#1a1a1a;margin-bottom:4px}
+    .auth-subtitle{font-size:12px;color:#888;margin-bottom:24px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-size:11px;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+    .input-wrapper{position:relative;display:flex;align-items:center}
+    .input-wrapper i{position:absolute;left:12px;color:#007260;font-size:14px}
+    .input-wrapper input,.input-wrapper select{width:100%;padding:11px 12px 11px 38px;border:2px solid #e8e8e8;border-radius:10px;font-size:13px;font-family:'Poppins',sans-serif;outline:none;transition:border 0.2s;color:#1a1a1a}
+    .input-wrapper input:focus,.input-wrapper select:focus{border-color:#007260}
+    .input-wrapper .eye-btn{position:absolute;right:10px;background:none;border:none;cursor:pointer;color:#aaa;font-size:13px}
+    .terms{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#666;margin-bottom:18px;cursor:pointer}
+    .terms input{accent-color:#007260;width:14px;height:14px;margin-top:1px;flex-shrink:0}
+    .terms a{color:#007260;font-weight:600}
+    .btn-auth{width:100%;background:linear-gradient(135deg,#007260,#4db6ac);color:white;border:none;padding:14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s}
+    .btn-auth:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,114,96,0.35)}
+    .auth-footer{text-align:center;margin-top:16px;font-size:12px;color:#888}
+    .auth-footer a{color:#007260;font-weight:700;text-decoration:none}
+    .error-msg{background:#fff0f0;color:#ef4444;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:14px;display:none;align-items:center;gap:8px;border-left:4px solid #ef4444}
+    .strength-bar{display:flex;gap:3px;margin-top:6px}
+    .strength-seg{flex:1;height:4px;border-radius:2px;background:#e8e8e8;transition:background 0.3s}
+    .strength-seg.weak{background:#ef4444}
+    .strength-seg.medium{background:#f59e0b}
+    .strength-seg.strong{background:#22c55e}
+    </style>
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-logo">
+        <img src="../assets/image/Logo.png" alt="Logo">
+        <h1>HEALTECH</h1>
+        <p>Mulai perjalanan hidup sehatmu</p>
+    </div>
+    <div class="auth-card">
+        <h2 class="auth-title">Buat Akun</h2>
+        <p class="auth-subtitle">Daftar gratis dan mulai perjalanan sehatmu hari ini</p>
+        <div class="error-msg" id="errorMsg"><i class="fas fa-exclamation-circle"></i><span id="errorText"></span></div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="regName" placeholder="Nama Anda"></div>
+            </div>
+            <div class="form-group">
+                <label>Usia</label>
+                <div class="input-wrapper"><i class="fas fa-calendar"></i><input type="number" id="regAge" placeholder="25" min="5" max="120"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="nama@email.com"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <div class="input-wrapper"><i class="fas fa-venus-mars"></i><select id="regGender"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></div>
+            </div>
+            <div class="form-group">
+                <label>Tujuan Kesehatan</label>
+                <div class="input-wrapper"><i class="fas fa-bullseye"></i><select id="regGoal"><option value="Turun berat badan">Turun berat badan</option><option value="Naik berat badan">Naik berat badan</option><option value="Hidup lebih sehat">Hidup sehat</option><option value="Tingkatkan kebugaran">Kebugaran</option></select></div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Berat (kg)</label>
+                <div class="input-wrapper"><i class="fas fa-weight-scale"></i><input type="number" id="regWeight" placeholder="65" min="20" max="300" step="0.1"></div>
+            </div>
+            <div class="form-group">
+                <label>Tinggi (cm)</label>
+                <div class="input-wrapper"><i class="fas fa-ruler"></i><input type="number" id="regHeight" placeholder="165" min="50" max="250"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="regPassword" placeholder="Min 6 karakter" oninput="checkStrength(this.value)">
+                <button class="eye-btn" onclick="togglePass('regPassword', this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="strength-bar"><div class="strength-seg" id="s1"></div><div class="strength-seg" id="s2"></div><div class="strength-seg" id="s3"></div><div class="strength-seg" id="s4"></div></div>
+        </div>
+        <div class="form-group">
+            <label>Konfirmasi Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="regConfirm" placeholder="Ulangi password">
+                <button class="eye-btn" onclick="togglePass('regConfirm', this)"><i class="fas fa-eye"></i></button>
+            </div>
+        </div>
+        <label class="terms"><input type="checkbox" id="agreeTerms"> Saya setuju dengan <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a> Healtech</label>
+        <button class="btn-auth" onclick="handleRegister()"><i class="fas fa-user-plus"></i> Daftar Sekarang</button>
+        <div class="auth-footer">Sudah punya akun? <a href="login.html">Masuk di sini</a></div>
+    </div>
+</div>
+
+<script>
+function togglePass(id, btn) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '<i class="fas fa-eye-slash"></i>'; }
+    else { input.type = 'password'; btn.innerHTML = '<i class="fas fa-eye"></i>'; }
+}
+
+function checkStrength(val) {
+    const segs = ['s1','s2','s3','s4'];
+    let strength = 0;
+    if (val.length >= 6) strength++;
+    if (val.length >= 10) strength++;
+    if (/[A-Z]/.test(val) && /[a-z]/.test(val)) strength++;
+    if (/[0-9!@#$%^&*]/.test(val)) strength++;
+    const colors = ['','weak','medium','strong','strong'];
+    segs.forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = 'strength-seg ' + (i < strength ? colors[strength] : '');
+    });
+}
+
+function handleRegister() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+    const age = document.getElementById('regAge').value;
+    const gender = document.getElementById('regGender').value;
+    const goal = document.getElementById('regGoal').value;
+    const weight = parseFloat(document.getElementById('regWeight').value);
+    const height = parseFloat(document.getElementById('regHeight').value);
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+
+    const showErr = (msg) => { document.getElementById('errorText').textContent = msg; errorMsg.style.display = 'flex'; };
+    if (!name) return showErr('Nama lengkap wajib diisi');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('Format email tidak valid');
+    if (!password || password.length < 6) return showErr('Password minimal 6 karakter');
+    if (password !== confirm) return showErr('Password tidak cocok');
+    if (!document.getElementById('agreeTerms').checked) return showErr('Centang syarat & ketentuan untuk melanjutkan');
+
+    let users = [];
+    try { users = JSON.parse(localStorage.getItem('registeredUsers')) || []; } catch(e) {}
+    if (users.find(u => u.email === email)) return showErr('Email sudah terdaftar, gunakan email lain');
+
+    const newUser = { name, email, password, age: parseInt(age) || null, gender, goal, weight: weight || null, height: height || null, joinedDate: new Date().toISOString(), targetWeight: null };
+    users.push(newUser);
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    localStorage.setItem('userData', JSON.stringify(newUser));
+
+    errorMsg.style.background = '#f0faf8'; errorMsg.style.color = '#007260'; errorMsg.style.borderLeftColor = '#007260';
+    document.getElementById('errorText').textContent = 'Akun berhasil dibuat! Mengalihkan...';
+    errorMsg.style.display = 'flex';
+    setTimeout(() => window.location.href = '../index.html', 1200);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Checklist Harian - HEALTECH</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../assets/css/footer.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="checklist.css" />
+    <script>
+      if (localStorage.getItem("isLoggedIn") !== "true")
+        window.location.href = "../loginregister/login.html";
+    </script>
+    <style>
+      .main-content {
+        padding: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding-bottom: 100px;
+      }
+      .page-header {
+        text-align: center;
+        margin-bottom: 28px;
+        padding: 0 10px;
+      }
+      .page-header h1 {
+        font-size: 24px;
+        font-weight: 800;
+        color: #1a1a1a;
+      }
+      .page-header p {
+        color: #888;
+        font-size: 13px;
+        margin-top: 6px;
+      }
+      .date-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .date-nav button {
+        background: #f0faf8;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #007260;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .date-nav button:hover:not(:disabled) {
+        background: #007260;
+        color: white;
+      }
+      .date-nav button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .date-nav #current-date {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a1a1a;
+      }
+      .checklist-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 768px) {
+        .checklist-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .checklist-panel {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      }
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .panel-header h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .panel-header h3 i {
+        color: #007260;
+      }
+      .progress-summary {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: linear-gradient(135deg, #007260, #4db6ac);
+        border-radius: 14px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+      }
+      .progress-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .progress-circle .pct {
+        font-size: 20px;
+        font-weight: 800;
+        color: white;
+        line-height: 1;
+      }
+      .progress-circle .pct-label {
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .progress-text-col {
+        color: white;
+        flex: 1;
+      }
+      .progress-text-col .points-val {
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .progress-text-col .points-lbl {
+        font-size: 11px;
+        opacity: 0.85;
+      }
+      .streak-badge {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 8px 12px;
+        text-align: center;
+      }
+      .streak-badge .streak-num {
+        font-size: 24px;
+        font-weight: 800;
+        color: white;
+        line-height: 1;
+      }
+      .streak-badge .streak-lbl {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .add-item-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+      }
+      .btn-add-item {
+        background: #f0faf8;
+        border: 2px dashed #007260;
+        color: #007260;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+      }
+      .btn-add-item:hover {
+        background: #007260;
+        color: white;
+      }
+      .journal-panel {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      }
+      .mood-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .mood-btn {
+        padding: 8px 14px;
+        border: 2px solid #e8e8e8;
+        background: white;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #555;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .mood-btn:hover {
+        border-color: #007260;
+        color: #007260;
+      }
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .tag-btn {
+        padding: 6px 12px;
+        border: 1.5px solid #e8e8e8;
+        background: white;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.2s;
+      }
+      .tag-btn:hover {
+        border-color: #007260;
+      }
+      .journal-textarea {
+        width: 100%;
+        min-height: 100px;
+        border: 2px solid #e8e8e8;
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 13px;
+        font-family: "Poppins", sans-serif;
+        resize: vertical;
+        outline: none;
+        color: #333;
+        transition: border 0.2s;
+      }
+      .journal-textarea:focus {
+        border-color: #007260;
+      }
+      .photo-upload-area {
+        border: 2px dashed #e8e8e8;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        color: #aaa;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .photo-upload-area:hover {
+        border-color: #007260;
+        color: #007260;
+      }
+      .photo-upload-area i {
+        font-size: 24px;
+      }
+      .photo-preview {
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .photo-preview img {
+        width: 100%;
+        border-radius: 12px;
+        max-height: 200px;
+        object-fit: cover;
+      }
+      .remove-photo-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+      .btn-save-journal {
+        width: 100%;
+        background: linear-gradient(135deg, #007260, #4db6ac);
+        color: white;
+        border: none;
+        padding: 13px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+      }
+      .btn-save-journal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 114, 96, 0.3);
+      }
+      .history-panel,
+      .archive-panel {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      }
+      .export-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .btn-export {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+      }
+      .btn-export.pdf {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+      }
+      .btn-export.csv {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+      }
+      .btn-export:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar"
+      style="
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      "
+    >
+      <div class="navbar-container">
+        <div class="logo">
+          <img src="../assets/image/Logo.png" alt="Logo" class="logo-img" />
+          <h1><span class="heal">HEAL</span><span class="tech">TECH</span></h1>
+        </div>
+        <div class="nav-links-top">
+          <a href="../index.html">Beranda</a>
+          <a href="../dashboard/dashboard.html">Dashboard</a>
+          <a href="../konten/konten.html">Konten</a>
+          <a href="../plan/plan.html">Rencana</a>
+          <a href="checklist.html" class="active">Checklist</a>
+          <a href="../profile/profile.html">Profil</a>
+        </div>
+        <div class="nav-icons">
+          <button id="langBtn"><i class="fas fa-globe"></i> ID</button>
+          <button id="notifBtn"><i class="fas fa-bell"></i></button>
+          <img
+            src="../assets/image/avatar.jpg"
+            alt="profil"
+            onclick="toggleUserMenu()"
+          />
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-content" style="padding-top: 70px">
+      <div class="page-header">
+        <h1>
+          <i class="fas fa-check-square" style="color: #007260"></i>
+          <span id="lbl-daily-checklist">Checklist Harian</span>
+        </h1>
+        <p>Catat aktivitas sehat harianmu dan raih streak!</p>
+      </div>
+
+      <div class="date-nav">
+        <button id="prevDayBtn"><i class="fas fa-chevron-left"></i></button>
+        <span id="current-date">Hari Ini</span>
+        <button id="nextDayBtn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <div class="progress-summary">
+        <div class="progress-circle">
+          <span class="pct" id="today-progress">0</span>
+          <span class="pct-label">%</span>
+        </div>
+        <div class="progress-text-col">
+          <div class="points-val">
+            <i class="fas fa-star" style="font-size: 16px"></i>
+            <span id="today-points">0</span> Poin
+          </div>
+          <div class="points-lbl">Progres hari ini</div>
+          <span
+            id="checklist-progress-badge"
+            style="font-size: 12px; opacity: 0.85"
+            >0/6 Selesai</span
+          >
+        </div>
+        <div class="streak-badge">
+          <div class="streak-num" id="streak-count">0</div>
+          <div class="streak-lbl"><i class="fas fa-fire"></i> Streak</div>
+        </div>
+      </div>
+
+      <div class="checklist-layout">
+        <div class="checklist-panel">
+          <div class="panel-header">
+            <h3>
+              <i class="fas fa-list-check"></i>
+              <span id="lbl-daily-checklist2">Checklist Harian</span>
+            </h3>
+          </div>
+          <div class="add-item-row">
+            <button class="btn-add-item" id="addItemBtn">
+              <i class="fas fa-plus"></i> Tambah Item
+            </button>
+          </div>
+          <div id="checklist-items-container"></div>
+        </div>
+
+        <div class="journal-panel">
+          <div class="panel-header">
+            <h3>
+              <i class="fas fa-journal-whills"></i>
+              <span id="lbl-journal">Jurnal</span>
+            </h3>
+          </div>
+          <label
+            style="
+              font-size: 12px;
+              font-weight: 600;
+              color: #555;
+              display: block;
+              margin-bottom: 8px;
+            "
+            id="lbl-mood"
+            >Mood hari ini:</label
+          >
+          <div class="mood-row">
+            <button class="mood-btn" data-mood="senang">
+              <i class="fas fa-face-smile"></i> Senang
+            </button>
+            <button class="mood-btn" data-mood="biasa">
+              <i class="fas fa-face-meh"></i> Biasa
+            </button>
+            <button class="mood-btn" data-mood="sedih">
+              <i class="fas fa-face-frown"></i> Sedih
+            </button>
+            <button class="mood-btn" data-mood="marah">
+              <i class="fas fa-face-angry"></i> Marah
+            </button>
+            <button class="mood-btn" data-mood="capek">
+              <i class="fas fa-face-tired"></i> Capek
+            </button>
+          </div>
+          <label
+            style="
+              font-size: 12px;
+              font-weight: 600;
+              color: #555;
+              display: block;
+              margin-bottom: 8px;
+            "
+            >Tag Aktivitas:</label
+          >
+          <div class="tags-row">
+            <button class="tag-btn" data-tag="olahraga">Olahraga</button>
+            <button class="tag-btn" data-tag="nutrisi">Nutrisi</button>
+            <button class="tag-btn" data-tag="tidur">Tidur</button>
+            <button class="tag-btn" data-tag="meditasi">Meditasi</button>
+            <button class="tag-btn" data-tag="air">Minum Air</button>
+          </div>
+          <label
+            style="
+              font-size: 12px;
+              font-weight: 600;
+              color: #555;
+              display: block;
+              margin-bottom: 8px;
+            "
+            id="lbl-daily-note"
+            >Catatan Harian:</label
+          >
+          <div class="photo-upload-area" id="photoUploadArea">
+            <i class="fas fa-camera"></i>
+            <span style="font-size: 12px">Tambah foto hari ini</span>
+          </div>
+          <div class="photo-preview" id="photoPreview" style="display: none">
+            <img id="previewImage" src="" alt="Foto jurnal" />
+            <button class="remove-photo-btn" id="removePhotoBtn">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            style="display: none"
+          />
+          <textarea
+            class="journal-textarea"
+            id="daily-note"
+            placeholder="Tulis catatan harianmu di sini..."
+          ></textarea>
+          <button class="btn-save-journal" id="saveJournalBtn">
+            <i class="fas fa-save"></i>
+            <span id="btn-save-journal">Simpan Jurnal</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="checklist-layout" style="margin-top: 20px">
+        <div class="history-panel">
+          <div class="panel-header">
+            <h3>
+              <i class="fas fa-history"></i>
+              <span id="lbl-history">Riwayat Checklist</span>
+            </h3>
+          </div>
+          <div id="historyList"></div>
+        </div>
+
+        <div class="archive-panel">
+          <div class="panel-header">
+            <h3>
+              <i class="fas fa-archive"></i>
+              <span id="lbl-archive">Arsip Jurnal</span>
+            </h3>
+          </div>
+          <div
+            style="
+              display: flex;
+              gap: 10px;
+              flex-wrap: wrap;
+              margin: 10px 0 16px;
+              align-items: center;
+            "
+          >
+            <button
+              type="button"
+              id="archiveSortLatestBtn"
+              style="
+                padding: 9px 14px;
+                border-radius: 12px;
+                border: 1px solid rgba(0, 114, 96, 0.25);
+                background: #fff;
+                border: none;
+                cursor: pointer;
+                font-weight: 800;
+                color: #007260;
+              "
+            >
+              Terbaru
+            </button>
+            <button
+              type="button"
+              id="archiveSortOldestBtn"
+              style="
+                padding: 9px 14px;
+                border-radius: 12px;
+                border: 1px solid rgba(0, 114, 96, 0.25);
+                background: #fff;
+                border: none;
+                cursor: pointer;
+                font-weight: 800;
+                color: #007260;
+              "
+            >
+              Terlama
+            </button>
+          </div>
+          <div id="archiveList"></div>
+        </div>
+      </div>
+
+      <div class="checklist-panel" style="margin-top: 20px">
+        <div class="panel-header">
+          <h3>
+            <i class="fas fa-download"></i>
+            <span id="lbl-export">Ekspor Data</span>
+          </h3>
+        </div>
+        <p style="font-size: 13px; color: #888; margin-bottom: 12px">
+          Unduh riwayat checklist dan jurnal Anda
+        </p>
+        <div class="export-row">
+          <button class="btn-export pdf" id="exportPdfBtn">
+            <i class="fas fa-file-pdf"></i>
+            <span id="btn-export-pdf">Ekspor ke PDF</span>
+          </button>
+          <button class="btn-export csv" id="exportCsvBtn">
+            <i class="fas fa-file-csv"></i>
+            <span id="btn-export-csv">Ekspor ke CSV</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <img src="../assets/image/Logo.png" class="footer-logo-img" />
+            <h1>
+              <span class="heal">HEAL</span><span class="tech">TECH</span>
+            </h1>
+          </div>
+          <p class="footer-tagline">
+            Empowering healthier lives through digital innovation.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-title">Tautan Cepat</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Beranda</a></li>
+            <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+            <li><a href="../konten/konten.html">Konten</a></li>
+            <li><a href="../plan/plan.html">Rencana</a></li>
+            <li><a href="checklist.html">Checklist</a></li>
+            <li><a href="../profile/profile.html">Profil</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-title">Hubungi Kami</h4>
+          <ul class="footer-contact">
+            <li><i class="fas fa-envelope"></i> healtech@gmail.com</li>
+            <li><i class="fas fa-phone-alt"></i> +6283876459470</li>
+            <li><i class="fas fa-map-marker-alt"></i> Bogor, Indonesia</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          <p>&copy; 2026 HEALTECH. Hak cipta dilindungi.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="nav-links-bottom">
+      <a href="../index.html"
+        ><i class="fas fa-home"></i><span>Beranda</span></a
+      >
+      <a href="../dashboard/dashboard.html"
+        ><i class="fas fa-chalkboard-user"></i><span>Dashboard</span></a
+      >
+      <a href="../konten/konten.html"
+        ><i class="fas fa-book"></i><span>Konten</span></a
+      >
+      <a href="../plan/plan.html"
+        ><i class="fas fa-calendar"></i><span>Rencana</span></a
+      >
+      <a href="checklist.html" class="active"
+        ><i class="fas fa-check-square"></i><span>Checklist</span></a
+      >
+      <a href="../profile/profile.html"
+        ><i class="fas fa-user"></i><span>Profil</span></a
+      >
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="checklist.js"></script>
+  </body>
+</html>

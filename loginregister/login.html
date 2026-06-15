@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - HEALTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Poppins',sans-serif;min-height:100vh;background:linear-gradient(135deg,#007260 0%,#4db6ac 50%,#80cbc4 100%);display:flex;align-items:center;justify-content:center;padding:20px}
+    .auth-wrapper{width:100%;max-width:420px}
+    .auth-logo{text-align:center;margin-bottom:28px}
+    .auth-logo img{width:64px;height:64px;border-radius:16px;margin-bottom:10px}
+    .auth-logo h1{font-size:28px;font-weight:900;color:white;letter-spacing:1px}
+    .auth-logo p{color:rgba(255,255,255,0.85);font-size:13px}
+    .auth-card{background:white;border-radius:24px;padding:36px 32px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+    .auth-title{font-size:22px;font-weight:800;color:#1a1a1a;margin-bottom:6px}
+    .auth-subtitle{font-size:13px;color:#888;margin-bottom:28px}
+    .form-group{margin-bottom:18px}
+    .form-group label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+    .input-wrapper{position:relative;display:flex;align-items:center}
+    .input-wrapper i{position:absolute;left:14px;color:#007260;font-size:15px}
+    .input-wrapper input{width:100%;padding:13px 14px 13px 42px;border:2px solid #e8e8e8;border-radius:12px;font-size:14px;font-family:'Poppins',sans-serif;outline:none;transition:border 0.2s;color:#1a1a1a}
+    .input-wrapper input:focus{border-color:#007260}
+    .input-wrapper .eye-btn{position:absolute;right:12px;background:none;border:none;cursor:pointer;color:#aaa;font-size:15px}
+    .form-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;font-size:12px}
+    .remember-me{display:flex;align-items:center;gap:8px;color:#555;cursor:pointer}
+    .remember-me input{accent-color:#007260;width:14px;height:14px}
+    .forgot-link{color:#007260;font-weight:600;text-decoration:none}
+    .forgot-link:hover{text-decoration:underline}
+    .btn-auth{width:100%;background:linear-gradient(135deg,#007260,#4db6ac);color:white;border:none;padding:15px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-auth:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,114,96,0.35)}
+    .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#ccc;font-size:12px}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e8e8e8}
+    .auth-footer{text-align:center;margin-top:20px;font-size:13px;color:#888}
+    .auth-footer a{color:#007260;font-weight:700;text-decoration:none}
+    .error-msg{background:#fff0f0;color:#ef4444;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:14px;display:none;align-items:center;gap:8px;border-left:4px solid #ef4444}
+    .success-msg{background:#f0faf8;color:#007260;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:14px;display:none;align-items:center;gap:8px;border-left:4px solid #007260}
+    .loading-spinner{animation:spin 1s linear infinite;display:none}
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-logo">
+        <img src="../assets/image/Logo.png" alt="Logo">
+        <h1>HEALTECH</h1>
+        <p>Healthy Education Technology</p>
+    </div>
+    <div class="auth-card">
+        <h2 class="auth-title">Selamat Datang</h2>
+        <p class="auth-subtitle">Masuk ke akun Anda untuk melanjutkan</p>
+        <div class="error-msg" id="errorMsg"><i class="fas fa-exclamation-circle"></i><span id="errorText">Email atau password salah</span></div>
+        <div class="success-msg" id="successMsg"><i class="fas fa-check-circle"></i><span>Berhasil masuk! Mengalihkan...</span></div>
+        <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="loginEmail" placeholder="nama@email.com" autocomplete="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password">
+                <button class="eye-btn" onclick="togglePass('loginPassword', this)"><i class="fas fa-eye"></i></button>
+            </div>
+        </div>
+        <div class="form-options">
+            <label class="remember-me"><input type="checkbox" id="rememberMe"> Ingat saya</label>
+            <a href="forgot-password.html" class="forgot-link">Lupa Password?</a>
+        </div>
+        <button class="btn-auth" id="loginBtn" onclick="handleLogin()">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Masuk</span>
+            <i class="fas fa-spinner loading-spinner" id="loadingSpinner"></i>
+        </button>
+        <div class="divider">atau</div>
+        <div class="auth-footer">Belum punya akun? <a href="register.html">Daftar Sekarang</a></div>
+    </div>
+</div>
+
+<script>
+if (localStorage.getItem('isLoggedIn') === 'true') window.location.href = '../index.html';
+
+function togglePass(id, btn) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '<i class="fas fa-eye-slash"></i>'; }
+    else { input.type = 'password'; btn.innerHTML = '<i class="fas fa-eye"></i>'; }
+}
+
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    const spinner = document.getElementById('loadingSpinner');
+    const btn = document.getElementById('loginBtn');
+
+    errorMsg.style.display = 'none';
+    if (!email || !password) {
+        document.getElementById('errorText').textContent = 'Email dan password wajib diisi';
+        errorMsg.style.display = 'flex'; return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('errorText').textContent = 'Format email tidak valid';
+        errorMsg.style.display = 'flex'; return;
+    }
+
+    spinner.style.display = 'inline-block'; btn.disabled = true;
+
+    setTimeout(() => {
+        let users = [];
+        try { users = JSON.parse(localStorage.getItem('registeredUsers')) || []; } catch(e) {}
+        const demoUsers = [{ email: 'demo@healtech.com', password: 'demo123', name: 'Demo User', gender: 'wanita', age: 22, weight: 55, height: 162, joinedDate: new Date().toISOString(), targetWeight: 52, goal: 'Turun berat badan' }];
+        const allUsers = [...demoUsers, ...users];
+        const user = allUsers.find(u => u.email === email && u.password === password);
+
+        spinner.style.display = 'none'; btn.disabled = false;
+
+        if (user) {
+            if (!user.joinedDate) user.joinedDate = new Date().toISOString();
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('userData', JSON.stringify(user));
+            successMsg.style.display = 'flex';
+            setTimeout(() => window.location.href = '../index.html', 1200);
+        } else {
+            document.getElementById('errorText').textContent = 'Email atau password tidak valid';
+            errorMsg.style.display = 'flex';
+        }
+    }, 700);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+</script>
+</body>
+</html>
