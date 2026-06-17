@@ -1,4 +1,4 @@
-function getCurrentUser() {
+ function getCurrentUser() {
   try {
     return JSON.parse(localStorage.getItem("currentUser"));
   } catch (e) {
@@ -751,67 +751,97 @@ window.showAddItemModal = showAddItemModal;
 window.saveJournal = saveJournal;
 
 document.addEventListener("DOMContentLoaded", function () {
-  updateDateDisplay();
-  loadChecklist();
-  renderChecklist();
-  loadJournal();
-  renderHistory();
-  renderArchive();
+  try {
+    updateDateDisplay();
+    loadChecklist();
+    renderChecklist();
+    loadJournal();
+    renderHistory();
+    renderArchive();
 
-  const btnPrev = document.getElementById("prevDayBtn");
-  const btnNext = document.getElementById("nextDayBtn");
-  if (btnPrev) btnPrev.addEventListener("click", () => changeDate(-1));
-  if (btnNext) btnNext.addEventListener("click", () => changeDate(1));
+    const btnPrev = document.getElementById("prevDayBtn");
+    const btnNext = document.getElementById("nextDayBtn");
+    if (btnPrev)
+      btnPrev.addEventListener("click", () => {
+        try {
+          changeDate(-1);
+        } catch (e) {
+          showSaveToast("Gagal pindah tanggal");
+          console.error(e);
+        }
+      });
+    if (btnNext)
+      btnNext.addEventListener("click", () => {
+        try {
+          changeDate(1);
+        } catch (e) {
+          showSaveToast("Gagal pindah tanggal");
+          console.error(e);
+        }
+      });
 
-  const saveBtn = document.getElementById("saveJournalBtn");
-  if (saveBtn) saveBtn.addEventListener("click", saveJournal);
+    const saveBtn = document.getElementById("saveJournalBtn");
+    if (saveBtn)
+      saveBtn.addEventListener("click", () => {
+        try {
+          saveJournal();
+        } catch (e) {
+          showSaveToast("Gagal menyimpan jurnal");
+          console.error(e);
+        }
+      });
 
-  const exportPdfBtn = document.getElementById("exportPdfBtn");
-  if (exportPdfBtn) exportPdfBtn.addEventListener("click", exportToPDF);
+    const exportPdfBtn = document.getElementById("exportPdfBtn");
+    if (exportPdfBtn) exportPdfBtn.addEventListener("click", exportToPDF);
 
-  const exportCsvBtn = document.getElementById("exportCsvBtn");
-  if (exportCsvBtn) exportCsvBtn.addEventListener("click", exportToCSV);
+    const exportCsvBtn = document.getElementById("exportCsvBtn");
+    if (exportCsvBtn) exportCsvBtn.addEventListener("click", exportToCSV);
 
-  const addItemBtn = document.getElementById("addItemBtn");
-  if (addItemBtn) addItemBtn.addEventListener("click", showAddItemModal);
+    const addItemBtn = document.getElementById("addItemBtn");
+    if (addItemBtn) addItemBtn.addEventListener("click", showAddItemModal);
 
-  // mood buttons
-  document.querySelectorAll(".mood-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".mood-btn")
-        .forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      selectedMood = btn.dataset.mood || "";
+    // mood buttons
+    document.querySelectorAll(".mood-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".mood-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedMood = btn.dataset.mood || "";
+      });
     });
-  });
 
-  // tag buttons
-  document.querySelectorAll(".tag-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btn.classList.toggle("active");
-      const tag = btn.dataset.tag;
-      if (!tag) return;
-      if (selectedTags.includes(tag))
-        selectedTags = selectedTags.filter((t) => t !== tag);
-      else selectedTags.push(tag);
+    // tag buttons
+    document.querySelectorAll(".tag-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("active");
+        const tag = btn.dataset.tag;
+        if (!tag) return;
+        if (selectedTags.includes(tag))
+          selectedTags = selectedTags.filter((t) => t !== tag);
+        else selectedTags.push(tag);
+      });
     });
-  });
 
-  const sortLatestBtn = document.getElementById("archiveSortLatestBtn");
-  const sortOldestBtn = document.getElementById("archiveSortOldestBtn");
+    const sortLatestBtn = document.getElementById("archiveSortLatestBtn");
+    const sortOldestBtn = document.getElementById("archiveSortOldestBtn");
 
-  if (sortLatestBtn) {
-    sortLatestBtn.addEventListener("click", () => {
-      localStorage.setItem("journalArchiveSort", "latest");
-      renderArchive();
-    });
-  }
+    if (sortLatestBtn) {
+      sortLatestBtn.addEventListener("click", () => {
+        localStorage.setItem("journalArchiveSort", "latest");
+        renderArchive();
+      });
+    }
 
-  if (sortOldestBtn) {
-    sortOldestBtn.addEventListener("click", () => {
-      localStorage.setItem("journalArchiveSort", "oldest");
-      renderArchive();
-    });
+    if (sortOldestBtn) {
+      sortOldestBtn.addEventListener("click", () => {
+        localStorage.setItem("journalArchiveSort", "oldest");
+        renderArchive();
+      });
+    }
+    // end try
+  } catch (e) {
+    showSaveToast("Terjadi error saat memuat halaman checklist");
+    console.error(e);
   }
 });

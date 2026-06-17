@@ -8,7 +8,6 @@ body {
   background-color: #f5f7fa;
   overflow-x: hidden;
   width: 100%;
-  padding-top: 60px;
 }
 
 .hero-bg-wrapper {
@@ -23,19 +22,28 @@ body {
   );
   position: relative;
 }
+
 .navbar {
-  background: transparent;
-  padding: 10px 0 0 0;
+  background: white;
+  padding: 10px 0;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition:
+    background 400ms ease,
+    backdrop-filter 400ms ease,
+    box-shadow 400ms ease,
+    padding 400ms ease;
 }
+
 .navbar.scrolled {
-  background: rgba(171, 167, 167, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 5px 0;
 }
 
@@ -49,6 +57,7 @@ body {
   margin: 0 auto;
   padding: 6px 0;
 }
+
 .logo {
   display: flex;
   align-items: center;
@@ -69,6 +78,7 @@ body {
 .logo h1 .tech {
   color: #000000;
 }
+
 .nav-links-top {
   display: flex;
   align-items: center;
@@ -88,13 +98,15 @@ body {
   white-space: nowrap;
 }
 .nav-links-top a:hover {
-  background: rgba(82, 82, 82, 0.607);
+  background: rgba(0, 114, 96, 0.12);
   transform: translateY(-1px);
 }
 .nav-links-top a.active {
-  background: rgba(0, 0, 0, 0.1);
-  font-weight: 600;
+  background: rgba(0, 114, 96, 0.12);
+  color: #007260;
+  font-weight: 700;
 }
+
 .nav-icons {
   display: flex;
   align-items: center;
@@ -128,16 +140,42 @@ body {
   border: 2px solid #007260;
   cursor: pointer;
 }
+
 .nav-links-bottom {
   display: none;
 }
+
+main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+.navbar + main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
 @media (max-width: 768px) {
   .navbar {
-    top: 0;
-    padding-top: 6px;
+    padding: 6px 0;
   }
   .nav-links-top {
     display: none !important;
+  }
+  .nav-icons button:first-child {
+    font-size: 10px;
+    padding: 5px 8px;
+    width: auto;
+    border-radius: 20px;
+  }
+  .nav-icons #notifBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0;
+  }
+  .nav-icons img {
+    width: 32px;
+    height: 32px;
   }
   .nav-links-bottom {
     display: flex !important;
@@ -148,7 +186,7 @@ body {
     background: linear-gradient(135deg, #1a4d3e 0%, #007260 100%);
     justify-content: space-evenly;
     align-items: center;
-    padding: 8px 16px;
+    padding: 6px 8px;
     z-index: 1000;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
   }
@@ -156,43 +194,29 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     text-decoration: none;
-    color: white;
+    color: rgba(255, 255, 255, 0.75);
     font-size: 10px;
     font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 30px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    transition: all 0.2s;
   }
   .nav-links-bottom a i {
     font-size: 18px;
   }
   .nav-links-bottom a.active {
-    background: #4db6ac;
-    color: #1a4d3e;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .nav-links-bottom a.active i {
+    color: white;
   }
 }
+
 @media (min-width: 769px) {
   .nav-links-bottom {
     display: none !important;
   }
-}
-.navbar-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-/* Pastikan tidak ada space akibat navbar fixed */
-
-.navbar.scrolled {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-}
-.nav-links-bottom .active {
-  color: #007260 !important;
-}
-.nav-links-bottom .active i {
-  color: #007260 !important;
 }

@@ -4,7 +4,11 @@
     padding: 30px 20px 80px;
     min-height: calc(100vh - 200px);
 }
-.plan-header { text-align: center; margin-bottom: 30px; }
+.plan-header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    margin-top: 100px;
+}
 .plan-header h1 { font-size: 28px; color: #1a2a2a; margin-bottom: 8px; }
 .plan-header h1 i { color: #007260; margin-right: 10px; }
 .plan-header p { color: #6a7a7a; }

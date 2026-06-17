@@ -34,6 +34,7 @@
         text-align: center;
         margin-bottom: 28px;
         padding: 0 10px;
+         margin-top: 40px;
       }
       .page-header h1 {
         font-size: 24px;
@@ -219,6 +220,15 @@
         align-items: center;
         gap: 6px;
       }
+
+      /* defensif: pastikan tombol mood/tag selalu bisa diklik */
+      .mood-btn,
+      .tag-btn {
+        pointer-events: auto;
+        position: relative;
+        z-index: 1;
+      }
+
       .mood-btn:hover {
         border-color: #007260;
         color: #007260;
@@ -366,10 +376,9 @@
     </style>
   </head>
   <body>
-    <nav
+<nav
       class="navbar"
       style="
-        background: white;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         position: fixed;
         top: 0;
@@ -698,6 +707,16 @@
 
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/ui.js"></script>
+    <script>
+      (function () {
+        const navbar = document.querySelector(".navbar");
+        if (!navbar) return;
+        navbar.classList.toggle(
+          "scrolled",
+          (window.scrollY || document.documentElement.scrollTop || 0) > 15,
+        );
+      })();
+    </script>
     <script src="checklist.js"></script>
   </body>
 </html>
